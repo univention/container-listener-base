@@ -1,0 +1,12 @@
+---
+
+version: '3.8'
+
+services:
+  listener:
+    build:
+      context: ./images/listener
+      args:
+        DEBIAN_BASE_IMAGE_TAG: buster-slim
+
+...
