@@ -10,6 +10,7 @@ stages:
 
 variables:
   UNIV_DOCKERHUB_MIRROR: docker-registry.knut.univention.de
+  DOCKER_TLS_CERTDIR: ""
 
   CI_PIPELINE_TAG: "${CI_PIPELINE_ID}-"
 
