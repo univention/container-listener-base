@@ -8,5 +8,6 @@ services:
       context: .
       args:
         DEBIAN_BASE_IMAGE_TAG: buster-slim
+        DOCKERHUB_CACHE: artifacts.knut.univention.de/dockerhub_proxy_cache/library/
 
 ...

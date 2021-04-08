@@ -22,9 +22,10 @@ ucr set ldap/master="${LDAP_HOST}"
 ucr set ldap/master/port="${LDAP_PORT}" # 636, 389
 
 exec "/usr/sbin/univention-directory-listener" \
-  -F -x -d 2 \
+  -F -x -d "${DEBUG_LEVEL}" \
   -b "${LDAP_BASE_DN}" \
   -D "cn=admin,${LDAP_BASE_DN}" \
+  -n "${NOTIFIER_SERVER}" \
   -m /usr/lib/univention-directory-listener/system \
   -c /var/lib/univention-directory-listener \
   -y "${LDAP_BIND_SECRET}" -ZZ
