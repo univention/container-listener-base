@@ -20,6 +20,8 @@ repos:
   - id: fix-encoding-pragma
   # "Trim Trailing Whitespace"
   - id: trailing-whitespace
+  # flake8
+  - id: flake8
 
 # "Shell Syntax Check"
 # This is a wrapper for shellcheck as long as

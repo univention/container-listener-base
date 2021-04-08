@@ -32,46 +32,30 @@
 # <https://www.gnu.org/licenses/>.
 #
 
-"""Listener Module Handler Dummy"""
+from __future__ import absolute_import
 
 from univention.listener.handler import ListenerModuleHandler
 
+name = 'dummy_handler'
 
-class AppListener(ListenerModuleHandler):
-    """Handler class loaded by the univention-directory-listener"""
+
+class ListenerModuleTemplate(ListenerModuleHandler):
     def initialize(self):
-        """Called by the listener on load"""
         self.logger.info('handler stub initialize')
 
-    def create(self, distinguished_name, new):
-        """Called when a LDAP-object has been created"""
-        self.logger.info(
-            f'handler stub create: dn {distinguished_name} new {new}'
-        )
+    def create(self, dn, new):
+        self.logger.info('[ create ] dn: %r', dn)
 
-    def modify(self, distinguished_name, old, new, old_dn):
-        """Called when a LDAP-object has been changed"""
-        self.logger.info(
-            f'handler stub modify: dn {distinguished_name} old {old} new {new} old_dn {old_dn}'
-        )
+    def modify(self, dn, old, new, old_dn):
+        self.logger.info('[ modify ] dn: %r', dn)
+        if old_dn:
+            self.logger.debug('it is (also) a move! old_dn: %r', old_dn)
+        self.logger.debug('changed attributes: %r', self.diff(old, new))
 
-    def remove(self, distinguished_name, old):
-        """Called when a LDAP-object has been deleted"""
-        self.logger.info(
-            f'handler stub remove: dn {distinguished_name} old {old}'
-        )
+    def remove(self, dn, old):
+        self.logger.info('[ remove ] dn: %r', dn)
 
     class Configuration(ListenerModuleHandler.Configuration):
-        """Handler class loaded by the univention-directory-listener"""
-        def get_description(self):
-            """Called by the listener to get the handler-description"""
-            self.logger.info('handler config stub get_description')
-            return 'Dummy listener module'
-
-        def get_ldap_filter(self):
-            """Called by the listener to get the handler-LDAP-filter"""
-            self.logger.info('handler config stub get_ldap_filter')
-            return '(univentionObjectType=<udm-module>)'
-
-
-# [EOF]
+        name = name
+        description = 'dummy listener handler description'
+        ldap_filter = '(objectClass=*)'
