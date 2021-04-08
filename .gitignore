@@ -1,1 +1,3 @@
+venv/
 /.env.listener
+secret/ldap.secret

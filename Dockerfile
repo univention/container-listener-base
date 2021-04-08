@@ -48,23 +48,20 @@ RUN \
   curl -fsSL "${URL}" | apt-key add - && \
   apt-get update && \
   apt-get --assume-yes --verbose-versions --no-install-recommends install \
+    python3-distutils \
+    python3-univention-directory-manager \
     univention-directory-listener && \
   rm -rf /var/lib/apt/lists/*
 
-COPY ./entrypoint.sh /
+RUN \
+  rm /usr/lib/univention-directory-listener/system/*
 
-ENTRYPOINT ["/entrypoint.sh"]
+COPY \
+  ./listener_handler.py \
+  /usr/lib/univention-directory-listener/system/
 
-CMD [ \
-  "-F", \
-  "-d 2", \
-  "-b ${LDAP_BASE_DN}", \
-  "-m /usr/lib/univention-directory-listener/system", \
-  "-c /var/lib/univention-directory-listener", \
-  "-ZZ", \
-  "-x", \
-  "-D ${LDAP_BIND_DN}", \
-  "-y /etc/ldap.secret" \
-]
+COPY ./command.sh /
+
+CMD ["/command.sh"]
 
 # [EOF]
