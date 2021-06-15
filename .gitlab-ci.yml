@@ -15,8 +15,6 @@ variables:
   DOCKER_TLS_CERTDIR: ""
   DOCKER_HOST: tcp://docker:2375
 
-  CI_PIPELINE_TAG: "${CI_PIPELINE_ID}-"
-
   DOCKER_COMPOSE_PRODUCTION_FILES:
     --file docker-compose.yaml
     --file docker-compose.prod.yaml
@@ -61,9 +59,9 @@ build-job:
       alias: docker
       command: ["--insecure-registry=artifacts.knut.univention.de"]
   script:
-    - cp .env.listener.example .env.listener
-    - docker-compose ${DOCKER_COMPOSE_BUILD_FILES} build
-    - docker-compose ${DOCKER_COMPOSE_BUILD_FILES} push
+  - apt-get update
+  - apt-get --assume-yes --verbose-versions --no-install-recommends install python3-sh
+  - python3 ci-build-script.py
 
 test-job:
   image: ${UNIV_DOCKERHUB_CACHE}docker/compose:debian-1.28.0
@@ -102,12 +100,8 @@ publish-job:
       alias: docker
       command: ["--insecure-registry=artifacts.knut.univention.de"]
   script:
-    - cp .env.listener.example .env.listener
-    - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} pull
-    - docker tag
-      ${UPX_IMAGE_REGISTRY}container-listener-base/listener:${CI_PIPELINE_TAG}test
-      ${UPX_IMAGE_REGISTRY}container-listener-base/listener:latest
-    - docker push
-      ${UPX_IMAGE_REGISTRY}container-listener-base/listener:latest
+  - apt-get update
+  - apt-get --assume-yes --verbose-versions --no-install-recommends install python3-sh
+  - python3 ci-publish-script.py
 
 ...
