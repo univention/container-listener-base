@@ -43,6 +43,11 @@ ARG DOCKERHUB_CACHE
 ARG DEBIAN_BASE_IMAGE_TAG
 FROM ${DOCKERHUB_CACHE}debian:${DEBIAN_BASE_IMAGE_TAG}
 
+ARG LABEL_CREATED=undefined
+ARG LABEL_REVISION=undefined
+ARG LABEL_SOURCE=undefined
+ARG LABEL_VERSION=undefined
+
 SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
 
 ###############################################################################
@@ -89,7 +94,10 @@ RUN \
     /root/univention-directory-listener_*.deb \
     python3-distutils \
     python3-univention-directory-manager && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* && \
+  awk \
+    '/^Package: univention-directory-listener$/{ while(!/^Version: /){getline} print $2 }' \
+    /var/lib/dpkg/status > /version
 
 RUN \
   rm /usr/lib/univention-directory-listener/system/*
@@ -101,5 +109,15 @@ COPY \
 COPY ./command.sh /
 
 CMD ["/command.sh"]
+
+LABEL org.opencontainers.image.created="${LABEL_CREATED}"
+LABEL org.opencontainers.image.description="Web service for Univention Management Console"
+LABEL org.opencontainers.image.licenses="AGPL-3.0-or-later"
+LABEL org.opencontainers.image.revision=$LABEL_REVISION
+LABEL org.opencontainers.image.source="${LABEL_SOURCE}"
+LABEL org.opencontainers.image.title="udm-rest"
+LABEL org.opencontainers.image.url="https://docs.software-univention.de/developer-reference-4.4.html#chap:umc"
+LABEL org.opencontainers.image.vendor="Univention GmbH"
+LABEL org.opencontainers.image.version="${LABEL_VERSION}"
 
 # [EOF]
