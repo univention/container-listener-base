@@ -8,11 +8,9 @@ stages:
 
 variables:
   UNIV_DOCKERHUB_MIRROR: artifacts.knut.univention.de
-  UNIV_DOCKERHUB_CACHE:
-    ${UNIV_DOCKERHUB_MIRROR}/dockerhub_proxy_cache/
-  UPX_IMAGE_REGISTRY:
-    ${UNIV_DOCKERHUB_MIRROR}/upx/
-  DOCKER_TLS_CERTDIR: ""
+  UNIV_DOCKERHUB_CACHE: ${UNIV_DOCKERHUB_MIRROR}/dockerhub_proxy_cache/
+  UPX_IMAGE_REGISTRY: ${UNIV_DOCKERHUB_MIRROR}/upx/
+  DOCKER_TLS_CERTDIR: ''
   DOCKER_HOST: tcp://docker:2375
 
   DOCKER_COMPOSE_PRODUCTION_FILES:
@@ -32,7 +30,7 @@ pre-commit-job:
   stage: lint-stage
   image:
     name: ${UPX_IMAGE_REGISTRY}container-pre-commit/pre-commit:latest
-    entrypoint: ["/bin/bash", "-c"]
+    entrypoint: [/bin/bash, -c]
   variables:
     PIP_CACHE_DIR: ${CI_PROJECT_DIR}/.cache/pip
     PRE_COMMIT_HOME: ${CI_PROJECT_DIR}/.cache/pre-commit
@@ -66,7 +64,7 @@ build-job:
   services:
   - name: ${UNIV_DOCKERHUB_CACHE}library/docker:18.09.7-dind
     alias: docker
-    command: ["--insecure-registry=artifacts.knut.univention.de"]
+    command: [--insecure-registry=artifacts.knut.univention.de]
   script:
   - apt-get update
   - apt-get --assume-yes --verbose-versions --no-install-recommends install python3-sh
@@ -80,7 +78,7 @@ test-job:
   services:
   - name: ${UNIV_DOCKERHUB_CACHE}library/docker:18.09.7-dind
     alias: docker
-    command: ["--insecure-registry=artifacts.knut.univention.de"]
+    command: [--insecure-registry=artifacts.knut.univention.de]
   script:
   - cp .env.listener.example .env.listener
   - cp "${LDAP_SECRET}" secret/ldap.secret
@@ -107,10 +105,9 @@ publish-job:
   services:
   - name: ${UNIV_DOCKERHUB_CACHE}library/docker:18.09.7-dind
     alias: docker
-    command: ["--insecure-registry=artifacts.knut.univention.de"]
+    command: [--insecure-registry=artifacts.knut.univention.de]
   script:
   - apt-get update
   - apt-get --assume-yes --verbose-versions --no-install-recommends install python3-sh
   - python3 ci-publish-script.py
-
 ...
