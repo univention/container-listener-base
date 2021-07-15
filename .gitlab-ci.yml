@@ -62,11 +62,11 @@ build-job:
   image: ${UNIV_DOCKERHUB_CACHE}docker/compose:debian-1.28.0
   stage: build-stage
   tags:
-    - docker
+  - docker
   services:
-    - name: ${UNIV_DOCKERHUB_CACHE}library/docker:18.09.7-dind
-      alias: docker
-      command: ["--insecure-registry=artifacts.knut.univention.de"]
+  - name: ${UNIV_DOCKERHUB_CACHE}library/docker:18.09.7-dind
+    alias: docker
+    command: ["--insecure-registry=artifacts.knut.univention.de"]
   script:
   - apt-get update
   - apt-get --assume-yes --verbose-versions --no-install-recommends install python3-sh
@@ -76,19 +76,19 @@ test-job:
   image: ${UNIV_DOCKERHUB_CACHE}docker/compose:debian-1.28.0
   stage: test-stage
   tags:
-    - docker
+  - docker
   services:
-    - name: ${UNIV_DOCKERHUB_CACHE}library/docker:18.09.7-dind
-      alias: docker
-      command: ["--insecure-registry=artifacts.knut.univention.de"]
+  - name: ${UNIV_DOCKERHUB_CACHE}library/docker:18.09.7-dind
+    alias: docker
+    command: ["--insecure-registry=artifacts.knut.univention.de"]
   script:
-    - cp .env.listener.example .env.listener
-    - cp "${LDAP_SECRET}" secret/ldap.secret
-    - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} pull
-    - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} up --detach --no-build
-    - echo "TODO test here"
-    - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} down
-    - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} rm
+  - cp .env.listener.example .env.listener
+  - cp "${LDAP_SECRET}" secret/ldap.secret
+  - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} pull
+  - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} up --detach --no-build
+  - echo "TODO test here"
+  - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} down
+  - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} rm
   artifacts:
     when: always
     expire_in: 4 weeks
@@ -101,13 +101,13 @@ publish-job:
   image: ${UNIV_DOCKERHUB_CACHE}docker/compose:debian-1.28.0
   stage: publish-stage
   tags:
-    - docker
+  - docker
   only:
-    - main
+  - main
   services:
-    - name: ${UNIV_DOCKERHUB_CACHE}library/docker:18.09.7-dind
-      alias: docker
-      command: ["--insecure-registry=artifacts.knut.univention.de"]
+  - name: ${UNIV_DOCKERHUB_CACHE}library/docker:18.09.7-dind
+    alias: docker
+    command: ["--insecure-registry=artifacts.knut.univention.de"]
   script:
   - apt-get update
   - apt-get --assume-yes --verbose-versions --no-install-recommends install python3-sh
