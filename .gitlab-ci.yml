@@ -42,6 +42,13 @@ pre-commit-job:
     - .cache/pre-commit
     - venv/
   script:
+  # The image currently supplies version 21.1.2
+  - /venv/bin/python -m pip install --upgrade pip==21.1.3
+  # pip/ruamel.yaml.clib depends on
+  #   gcc to compile test_ruamel_yaml.c
+  #   Scrt1.o and crti.o from musl-dev
+  #   Python.h from python3-dev
+  - apk add --no-cache gcc musl-dev python3-dev
   # Compose lint would fail without the referenced env files
   - cp .env.listener.example .env.listener
   - pre-commit run --all-files
