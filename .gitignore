@@ -1,3 +1,4 @@
-venv/
 /.env.listener
-secret/ldap.secret
+/lib/__pycache__/
+/secret/ldap.secret
+/venv/

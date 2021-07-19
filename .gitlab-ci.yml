@@ -8,11 +8,9 @@ stages:
 
 variables:
   UNIV_DOCKERHUB_MIRROR: artifacts.knut.univention.de
-  UNIV_DOCKERHUB_CACHE:
-    ${UNIV_DOCKERHUB_MIRROR}/dockerhub_proxy_cache/
-  UPX_IMAGE_REGISTRY:
-    ${UNIV_DOCKERHUB_MIRROR}/upx/
-  DOCKER_TLS_CERTDIR: ""
+  UNIV_DOCKERHUB_CACHE: ${UNIV_DOCKERHUB_MIRROR}/dockerhub_proxy_cache/
+  UPX_IMAGE_REGISTRY: ${UNIV_DOCKERHUB_MIRROR}/upx/
+  DOCKER_TLS_CERTDIR: ''
   DOCKER_HOST: tcp://docker:2375
 
   DOCKER_COMPOSE_PRODUCTION_FILES:
@@ -32,7 +30,7 @@ pre-commit-job:
   stage: lint-stage
   image:
     name: ${UPX_IMAGE_REGISTRY}container-pre-commit/pre-commit:latest
-    entrypoint: ["/bin/bash", "-c"]
+    entrypoint: [/bin/bash, -c]
   variables:
     PIP_CACHE_DIR: ${CI_PROJECT_DIR}/.cache/pip
     PRE_COMMIT_HOME: ${CI_PROJECT_DIR}/.cache/pre-commit
@@ -42,6 +40,13 @@ pre-commit-job:
     - .cache/pre-commit
     - venv/
   script:
+  # The image currently supplies version 21.1.2
+  - /venv/bin/python -m pip install --upgrade pip==21.1.3
+  # pip/ruamel.yaml.clib depends on
+  #   gcc to compile test_ruamel_yaml.c
+  #   Scrt1.o and crti.o from musl-dev
+  #   Python.h from python3-dev
+  - apk add --no-cache gcc musl-dev python3-dev
   # Compose lint would fail without the referenced env files
   - cp .env.listener.example .env.listener
   - pre-commit run --all-files
@@ -55,11 +60,11 @@ build-job:
   image: ${UNIV_DOCKERHUB_CACHE}docker/compose:debian-1.28.0
   stage: build-stage
   tags:
-    - docker
+  - docker
   services:
-    - name: ${UNIV_DOCKERHUB_CACHE}library/docker:18.09.7-dind
-      alias: docker
-      command: ["--insecure-registry=artifacts.knut.univention.de"]
+  - name: ${UNIV_DOCKERHUB_CACHE}library/docker:18.09.7-dind
+    alias: docker
+    command: [--insecure-registry=artifacts.knut.univention.de]
   script:
   - apt-get update
   - apt-get --assume-yes --verbose-versions --no-install-recommends install python3-sh
@@ -69,19 +74,19 @@ test-job:
   image: ${UNIV_DOCKERHUB_CACHE}docker/compose:debian-1.28.0
   stage: test-stage
   tags:
-    - docker
+  - docker
   services:
-    - name: ${UNIV_DOCKERHUB_CACHE}library/docker:18.09.7-dind
-      alias: docker
-      command: ["--insecure-registry=artifacts.knut.univention.de"]
+  - name: ${UNIV_DOCKERHUB_CACHE}library/docker:18.09.7-dind
+    alias: docker
+    command: [--insecure-registry=artifacts.knut.univention.de]
   script:
-    - cp .env.listener.example .env.listener
-    - cp "${LDAP_SECRET}" secret/ldap.secret
-    - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} pull
-    - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} up --detach --no-build
-    - echo "TODO test here"
-    - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} down
-    - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} rm
+  - cp .env.listener.example .env.listener
+  - cp "${LDAP_SECRET}" secret/ldap.secret
+  - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} pull
+  - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} up --detach --no-build
+  - echo "TODO test here"
+  - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} down
+  - docker-compose ${DOCKER_COMPOSE_PRODUCTION_FILES} rm
   artifacts:
     when: always
     expire_in: 4 weeks
@@ -94,16 +99,15 @@ publish-job:
   image: ${UNIV_DOCKERHUB_CACHE}docker/compose:debian-1.28.0
   stage: publish-stage
   tags:
-    - docker
+  - docker
   only:
-    - main
+  - main
   services:
-    - name: ${UNIV_DOCKERHUB_CACHE}library/docker:18.09.7-dind
-      alias: docker
-      command: ["--insecure-registry=artifacts.knut.univention.de"]
+  - name: ${UNIV_DOCKERHUB_CACHE}library/docker:18.09.7-dind
+    alias: docker
+    command: [--insecure-registry=artifacts.knut.univention.de]
   script:
   - apt-get update
   - apt-get --assume-yes --verbose-versions --no-install-recommends install python3-sh
   - python3 ci-publish-script.py
-
 ...
