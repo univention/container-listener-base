@@ -45,6 +45,8 @@ def main():
         'UPX_IMAGE_REGISTRY',
         ci_vars.DEFAULT_UPX_IMAGE_REGISTRY,
     )
+    upx_image_name = 'container-listener-base/listener'
+    upx_image_path = '{}{}'.format(upx_image_registry, upx_image_name)
 
     for old_name in glob.iglob('.env.*.example'):
         new_name = old_name.replace('.example', '')
@@ -56,13 +58,13 @@ def main():
         _env=envs['compose'],
     )
 
-    image_path = '{}container-listener-base/listener'.format(
-        upx_image_registry
-    )
     try:
-        # push tag "<version>-<ci-pipeline-id>"
+        # push tags "build-<ci-pipeline-id>" and "<version>-<ci-pipeline-id>"
         ci_docker.add_and_push_build_version_label_and_tag(
-            image_path, ci_pipeline_id, envs['docker'], envs['pull_push']
+            upx_image_path,
+            ci_pipeline_id,
+            envs['docker'],
+            envs['pull_push'],
         )
     except ci_version.AppVersionNotFound:
         log.error('app version not found')
@@ -70,13 +72,6 @@ def main():
     except ci_docker.DockerPushFailed:
         log.error('docker push failed')
         return 3
-
-    # push tag "build-<ci-pipeline-id>"
-    sh_out.docker_compose(
-        docker_compose_build_files.split(),
-        'push',
-        _env=envs['compose'],
-    )
 
     return 0
 

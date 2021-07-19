@@ -30,7 +30,7 @@ sh_out = sh(_out='/dev/stdout', _err='/dev/stderr', _cwd=BASE_DIR)
 def main():
     """The main script builds, labels and pushes"""
 
-    envs = ci_vars.get_docker_envs(BASE_DIR, pull_push=True)
+    envs = ci_vars.get_docker_envs(BASE_DIR, pull_push=True, compose=False)
 
     ci_pipeline_id = os.environ.get(
         'CI_PIPELINE_ID', ci_vars.DEFAULT_CI_PIPELINE_ID
@@ -40,19 +40,16 @@ def main():
         'UPX_IMAGE_REGISTRY',
         ci_vars.DEFAULT_UPX_IMAGE_REGISTRY,
     )
-
-    image_path = '{}container-listener-base/listener'.format(
-        upx_image_registry
-    )
+    upx_image_name = 'container-listener-base/listener'
+    upx_image_path = '{}{}'.format(upx_image_registry, upx_image_name)
 
     try:
         # push tags "latest" and "<version>"
         ci_docker.pull_add_push_publish_version_tag(
-            image_path,
+            upx_image_path,
             ci_pipeline_id,
             envs['docker'],
             envs['pull_push'],
-            image_path,
         )
     except ci_version.AppVersionNotFound:
         log.error('app version not found')
