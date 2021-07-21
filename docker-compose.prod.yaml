@@ -4,6 +4,6 @@ version: '3.8'
 
 services:
   listener:
-    image: artifacts.knut.univention.de/upx/container-listener-base/listener:build-${CI_PIPELINE_ID}
+    image: artifacts.knut.univention.de/upx/upx-listener-base:build-${CI_PIPELINE_ID}
 
 ...

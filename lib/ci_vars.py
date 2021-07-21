@@ -81,7 +81,9 @@ def get_docker_envs(
                     'rev-parse',
                     'HEAD',
                     _cwd=git_dir,
-                ).stdout.rstrip().decode('ascii')
+                )
+                .stdout.rstrip()
+                .decode('ascii')
             )
 
         compose_env.update(get_env_vars(ADDITIONAL_COMPOSE_VARS))

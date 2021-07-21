@@ -91,7 +91,7 @@ def add_and_push_release_tags(
 
 
 def add_and_push_build_version_label_and_tag(
-    image_path, ci_pipeline_id, docker_env, pull_push_env
+    image_name, ci_pipeline_id, docker_env, pull_push_env
 ):
     """Get the version, add it as a label and push it as a tag with build-id"""
 
@@ -99,10 +99,9 @@ def add_and_push_build_version_label_and_tag(
         'UPX_IMAGE_REGISTRY',
         ci_vars.DEFAULT_UPX_IMAGE_REGISTRY,
     )
-    upx_image_name = 'container-listener-base/listener'
-    upx_image_path = '{}{}'.format(upx_image_registry, upx_image_name)
+    upx_image_path = '{}{}'.format(upx_image_registry, image_name)
 
-    build_path = '{}:build-{}'.format(image_path, ci_pipeline_id)
+    build_path = '{}:build-{}'.format(upx_image_path, ci_pipeline_id)
     app_version = ci_version.get_app_version(build_path, docker_env)
 
     add_version_label(app_version, build_path, docker_env)
@@ -122,7 +121,7 @@ def add_and_push_build_version_label_and_tag(
 
 
 def pull_add_push_publish_version_tag(
-    image_path, ci_pipeline_id, docker_env, pull_push_env
+    image_name, ci_pipeline_id, docker_env, pull_push_env
 ):
     """Get the version, push latest and version tags"""
 
@@ -130,17 +129,15 @@ def pull_add_push_publish_version_tag(
         'UPX_IMAGE_REGISTRY',
         ci_vars.DEFAULT_UPX_IMAGE_REGISTRY,
     )
-    upx_image_name = 'container-listener-base/listener'
-    upx_image_path = '{}{}'.format(upx_image_registry, upx_image_name)
+    upx_image_path = '{}{}'.format(upx_image_registry, image_name)
 
     quay_image_registry = os.environ.get(
         'QUAY_IMAGE_REGISTRY',
         ci_vars.DEFAULT_QUAY_IMAGE_REGISTRY,
     )
-    quay_image_name = 'upx-listener-base'
-    quay_image_path = '{}{}'.format(quay_image_registry, quay_image_name)
+    quay_image_path = '{}{}'.format(quay_image_registry, image_name)
 
-    build_path = '{}:build-{}'.format(image_path, ci_pipeline_id)
+    build_path = '{}:build-{}'.format(upx_image_path, ci_pipeline_id)
 
     try:
         sh_out.docker.pull(build_path, _env=pull_push_env)

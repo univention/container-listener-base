@@ -32,6 +32,8 @@ sh_out = sh(_out='/dev/stdout', _err='/dev/stderr', _cwd=BASE_DIR)
 def main():
     """The main script builds, labels and pushes"""
 
+    image_name = 'upx-listener-base'
+
     envs = ci_vars.get_docker_envs(BASE_DIR, pull_push=True, compose=True)
 
     docker_compose_build_files = os.environ.get(
@@ -40,13 +42,6 @@ def main():
     )
 
     ci_pipeline_id = envs['compose']['CI_PIPELINE_ID']
-
-    upx_image_registry = os.environ.get(
-        'UPX_IMAGE_REGISTRY',
-        ci_vars.DEFAULT_UPX_IMAGE_REGISTRY,
-    )
-    upx_image_name = 'container-listener-base/listener'
-    upx_image_path = '{}{}'.format(upx_image_registry, upx_image_name)
 
     for old_name in glob.iglob('.env.*.example'):
         new_name = old_name.replace('.example', '')
@@ -61,7 +56,7 @@ def main():
     try:
         # push tags "build-<ci-pipeline-id>" and "<version>-<ci-pipeline-id>"
         ci_docker.add_and_push_build_version_label_and_tag(
-            upx_image_path,
+            image_name,
             ci_pipeline_id,
             envs['docker'],
             envs['pull_push'],

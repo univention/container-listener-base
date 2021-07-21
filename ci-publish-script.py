@@ -30,23 +30,18 @@ sh_out = sh(_out='/dev/stdout', _err='/dev/stderr', _cwd=BASE_DIR)
 def main():
     """The main script builds, labels and pushes"""
 
+    image_name = 'upx-listener-base'
+
     envs = ci_vars.get_docker_envs(BASE_DIR, pull_push=True, compose=False)
 
     ci_pipeline_id = os.environ.get(
         'CI_PIPELINE_ID', ci_vars.DEFAULT_CI_PIPELINE_ID
     )
 
-    upx_image_registry = os.environ.get(
-        'UPX_IMAGE_REGISTRY',
-        ci_vars.DEFAULT_UPX_IMAGE_REGISTRY,
-    )
-    upx_image_name = 'container-listener-base/listener'
-    upx_image_path = '{}{}'.format(upx_image_registry, upx_image_name)
-
     try:
         # push tags "latest" and "<version>"
         ci_docker.pull_add_push_publish_version_tag(
-            upx_image_path,
+            image_name,
             ci_pipeline_id,
             envs['docker'],
             envs['pull_push'],
