@@ -8,9 +8,6 @@
 import os
 import sys
 
-# third party
-import sh  # pylint: disable=import-error
-
 # internal imports
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 LIBS_DIR = os.path.join(BASE_DIR, 'lib')
@@ -20,11 +17,8 @@ import ci_docker  # noqa: E402,E501; pylint: disable=import-error,wrong-import-p
 from ci_log import (  # noqa: E402,E501; pylint: disable=import-error,wrong-import-position
     log,
 )
-import ci_vars  # noqa: E402,E501; pylint: disable=import-error,wrong-import-position
+import ci_vars  # noqa: E402; pylint: disable=import-error,wrong-import-position
 import ci_version  # noqa: E402,E501; pylint: disable=import-error,wrong-import-position
-
-# pylint: disable=not-callable
-sh_out = sh(_out='/dev/stdout', _err='/dev/stderr', _cwd=BASE_DIR)
 
 
 def main():
@@ -32,17 +26,13 @@ def main():
 
     image_name = 'upx-listener-base'
 
-    envs = ci_vars.get_docker_envs(BASE_DIR, pull_push=True, compose=False)
-
-    ci_pipeline_id = os.environ.get(
-        'CI_PIPELINE_ID', ci_vars.DEFAULT_CI_PIPELINE_ID
-    )
+    envs = ci_vars.get_docker_envs(BASE_DIR, pull_push=True)
 
     try:
         # push tags "latest" and "<version>"
         ci_docker.pull_add_push_publish_version_tag(
             image_name,
-            ci_pipeline_id,
+            envs['common']['CI_PIPELINE_ID'],
             envs['docker'],
             envs['pull_push'],
         )

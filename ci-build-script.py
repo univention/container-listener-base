@@ -22,7 +22,7 @@ import ci_docker  # noqa: E402,E501; pylint: disable=import-error,wrong-import-p
 from ci_log import (  # noqa: E402,E501; pylint: disable=import-error,wrong-import-position
     log,
 )
-import ci_vars  # noqa: E402,E501; pylint: disable=import-error,wrong-import-position
+import ci_vars  # noqa: E402; pylint: disable=import-error,wrong-import-position
 import ci_version  # noqa: E402,E501; pylint: disable=import-error,wrong-import-position
 
 # pylint: disable=not-callable
@@ -36,19 +36,12 @@ def main():
 
     envs = ci_vars.get_docker_envs(BASE_DIR, pull_push=True, compose=True)
 
-    docker_compose_build_files = os.environ.get(
-        'DOCKER_COMPOSE_BUILD_FILES',
-        ci_vars.DEFAULT_DOCKER_COMPOSE_BUILD_FILES,
-    )
-
-    ci_pipeline_id = envs['compose']['CI_PIPELINE_ID']
-
     for old_name in glob.iglob('.env.*.example'):
         new_name = old_name.replace('.example', '')
         shutil.copy2(old_name, new_name)
 
     sh_out.docker_compose(
-        docker_compose_build_files.split(),
+        envs['common']['DOCKER_COMPOSE_BUILD_FILES'].split(),
         'build',
         _env=envs['compose'],
     )
@@ -57,7 +50,7 @@ def main():
         # push tags "build-<ci-pipeline-id>" and "<version>-<ci-pipeline-id>"
         ci_docker.add_and_push_build_version_label_and_tag(
             image_name,
-            ci_pipeline_id,
+            envs['common']['CI_PIPELINE_ID'],
             envs['docker'],
             envs['pull_push'],
         )
