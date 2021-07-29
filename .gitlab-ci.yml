@@ -29,7 +29,7 @@ default:
 pre-commit-job:
   stage: lint-stage
   image:
-    name: ${UPX_IMAGE_REGISTRY}container-pre-commit/pre-commit:latest
+    name: ${UPX_IMAGE_REGISTRY}upx-pre-commit:latest
     entrypoint: [/bin/bash, -c]
   variables:
     PIP_CACHE_DIR: ${CI_PROJECT_DIR}/.cache/pip
