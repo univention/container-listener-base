@@ -28,6 +28,7 @@ default:
 
 pre-commit-job:
   stage: lint-stage
+  needs: []
   image:
     name: ${UPX_IMAGE_REGISTRY}upx-pre-commit:latest
     entrypoint: [/bin/bash, -c]
@@ -54,6 +55,7 @@ pre-commit-job:
 build-job:
   image:
     ${UPX_IMAGE_REGISTRY}docker/compose:1.30-debian-buster-python-3.7.3
+  needs: []
   stage: build-stage
   tags:
   - docker
