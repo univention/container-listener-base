@@ -4,6 +4,7 @@ version: '3.8'
 
 services:
   listener:
+    image: artifacts.knut.univention.de/upx/upx-listener-base:latest
     build:
       context: .
       args:
