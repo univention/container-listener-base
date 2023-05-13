@@ -6,11 +6,11 @@ services:
   listener:
     env_file: .env.listener
     secrets:
-    - ca_cert
-    - cert_pem
-    - ldap_secret
+      - ca_cert
+      - cert_pem
+      - ldap_secret
     volumes:
-    - listener-data:/var/lib/univention-directory-listener/:rw
+      - listener-data:/var/lib/univention-directory-listener/:rw
 
 secrets:
   ca_cert:

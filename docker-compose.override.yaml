@@ -14,5 +14,7 @@ services:
         LABEL_REVISION: "${CI_COMMIT_SHA}"
         LABEL_SOURCE: "${CI_PROJECT_URL}"
         LABEL_VERSION: "${CI_PIPELINE_ID}"
+    extra_hosts:
+      ucs-5746.univention.intranet: "10.200.115.20"
 
 ...
