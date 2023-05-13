@@ -1,10 +1,14 @@
 ---
 
 stages:
-- lint-stage
-- build-stage
-- test-stage
-- publish-stage
+  - lint-stage
+  - build-stage
+  - test-stage
+  - publish-stage
+
+include:
+  - project: univention/dist/docker-services
+    file: kaniko.yml
 
 variables:
   UNIV_DOCKERHUB_MIRROR: artifacts.knut.univention.de
@@ -69,6 +73,14 @@ build-job:
   - apt-get update
   - apt-get --assume-yes --verbose-versions --no-install-recommends install python3-sh
   - python3 ci-build-script.py
+
+build-with-kaniko:
+  stage: build-stage
+  extends: .kaniko
+  needs: []
+  before_script: ""
+  # variables:
+  #   CI_DEBUG_TRACE: "true"
 
 test-job:
   image:
