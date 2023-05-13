@@ -4,6 +4,7 @@ version: '3.8'
 
 services:
   listener:
+    platform: linux/amd64
     image: artifacts.knut.univention.de/upx/upx-listener-base:latest
     build:
       context: .
