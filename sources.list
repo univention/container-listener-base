@@ -1,7 +1,5 @@
-# TODO: remove "-test" after UCS 5.0 release
+deb https://updates.software-univention.de/ ucs502 main
+deb-src https://updates.software-univention.de ucs502 main
 
-deb https://updates-test.software-univention.de/ ucs500 main
-deb-src https://updates-test.software-univention.de ucs500 main
-
-deb https://updates-test.software-univention.de/ errata500 main
-deb-src https://updates-test.software-univention.de errata500 main
+deb https://updates.software-univention.de/ errata502 main
+deb-src https://updates.software-univention.de errata502 main
