@@ -14,8 +14,10 @@ repos:
   - id: check-merge-conflict
   # "Check Yaml"
   - id: check-yaml
+    exclude: ^helm/.+/templates/
   # "Fix End of Files"
   - id: end-of-file-fixer
+    exclude: ^helm/.+/README.md$
   # "Fix python encoding pragma"
   - id: fix-encoding-pragma
   # "Trim Trailing Whitespace"
@@ -62,4 +64,11 @@ repos:
 #     - '--server'
 #     - 'https://git.knut.univention.de'
 
+- repo: https://github.com/norwoodj/helm-docs
+  rev: v1.11.0
+  hooks:
+    - id: helm-docs
+      args:
+        - --chart-search-root=helm
+        - --template-files=README.md.gotmpl
 ...

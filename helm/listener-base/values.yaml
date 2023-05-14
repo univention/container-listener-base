@@ -1,0 +1,75 @@
+replicaCount: 1
+
+listener_base:
+  environment: "staging"
+  ca_cert: ""
+  ca_cert_file: "/var/secrets/ca_cert"
+  cert_pem_file: "/var/secrets/cert_pem"
+  cert_pem: ""
+  debug_level: "5"
+  auth_ldap_secret: ""
+  ldap_base_dn: "dc=univention,dc=intranet"
+  ldap_bind_secret: "/var/secrets/ldap_secret"
+  ldap_host: "ucs-machine"
+  # -- Will add a mapping from "ldap_host" to "ldap_host_ip" into "/etc/hosts" if set
+  ldap_host_ip: ""
+  ldap_port: "389"
+  # -- Defaults to "ldap_host" if not set.
+  notifier_server: ""
+
+image:
+  registry: "gitregistry.knut.univention.de"
+  repository: "univention/customers/dataport/upx/container-listener-base/listener-base-debug"
+  pullPolicy: "Always"
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

@@ -1,0 +1,26 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.description" . }}
+
+- **Version**: {{ template "chart.version" . }}
+- **Type**: {{ template "chart.type" . }}
+- **AppVersion**: {{ template "chart.appVersion" . }}
+- {{ template "chart.homepageLine" . }}
+
+## Introduction
+
+This chart does install a the base listener container with a debugging handler.
+
+It is mainly intended to help with testing if an environment is hooked up
+correctly. The handler will log all events, so that it is easy to observe if the
+events arrive.
+
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSectionHtml" . }}

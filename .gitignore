@@ -1,6 +1,8 @@
 /.env.listener
 /ansible/inventory/*.yaml
 /docker-compose.override.yaml
+/helm/listener-base/charts/*.tgz
+/helm/values-*.yaml
 /lib/__pycache__/
 /secret/*.secret
 /ssl/certs/*.pem
