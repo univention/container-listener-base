@@ -1,5 +1,6 @@
 /.env.listener
 /ansible/inventory/*.yaml
 /lib/__pycache__/
-/secret/ldap.secret
+/secret/*.secret
+/ssl/certs/*.pem
 /venv/
