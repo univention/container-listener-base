@@ -43,11 +43,6 @@ RUN \
 
 FROM ucs-sources-base
 
-ARG LABEL_CREATED=undefined
-ARG LABEL_REVISION=undefined
-ARG LABEL_SOURCE=undefined
-ARG LABEL_VERSION=undefined
-
 SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
 
 # hadolint ignore=DL3008
@@ -87,16 +82,5 @@ COPY \
 COPY ./command.sh /
 
 CMD ["/command.sh"]
-
-# TODO: Remove or update
-LABEL org.opencontainers.image.created="${LABEL_CREATED}"
-LABEL org.opencontainers.image.description="Web service for Univention Management Console"
-LABEL org.opencontainers.image.licenses="AGPL-3.0-or-later"
-LABEL org.opencontainers.image.revision=$LABEL_REVISION
-LABEL org.opencontainers.image.source="${LABEL_SOURCE}"
-LABEL org.opencontainers.image.title="udm-rest"
-LABEL org.opencontainers.image.url="https://docs.software-univention.de/developer-reference-4.4.html#chap:umc"
-LABEL org.opencontainers.image.vendor="Univention GmbH"
-LABEL org.opencontainers.image.version="${LABEL_VERSION}"
 
 # [EOF]

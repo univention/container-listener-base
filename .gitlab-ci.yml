@@ -27,5 +27,6 @@ build-container-image:
   stage: build
   extends: .kaniko
   needs: []
+  variables:
 
 ...
