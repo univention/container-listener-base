@@ -14,6 +14,7 @@ include:
       - defaults/souvap-workflow.yaml
       - templates/souvap.yaml
       - jobs/lint-pre-commit.yaml
+      - jobs/lint-commit-messages.yaml
 
 variables:
   UNIV_DOCKERHUB_MIRROR: artifacts.knut.univention.de

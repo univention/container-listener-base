@@ -23,6 +23,13 @@ repos:
   # flake8
   - id: flake8
 
+# "Commit messages"
+- repo: https://github.com/compilerla/conventional-pre-commit
+  rev: v2.1.1
+  hooks:
+    - id: conventional-pre-commit
+      stages: [commit-msg]
+
 # "Shell Syntax Check"
 # This is a wrapper for shellcheck as long as
 # shellcheck doesn't have it's own .pre-commit-hooks.yaml
