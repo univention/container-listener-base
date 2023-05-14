@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #
 # Univention Listener Converter
@@ -31,8 +31,6 @@
 # /usr/share/common-licenses/AGPL-3; if not, see
 # <https://www.gnu.org/licenses/>.
 #
-
-from __future__ import absolute_import
 
 from univention.listener.handler import ListenerModuleHandler
 
