@@ -1,6 +1,20 @@
 
 # Base-container for univention-directory-listener
 
+The container is published in two variations:
+
+- `gitregistry.knut.univention.de/univention/customers/dataport/upx/container-listener-base/listener-base`
+
+  This variation is intended to be used as a base image when building custom
+  listener containers. It does not include any listener modules.
+
+- `gitregistry.knut.univention.de/univention/customers/dataport/upx/container-listener-base/listener-base-debug`
+
+  This image does in addition contain a handler named `dummy_handler` which will
+  generate output on all events and log them into
+  `/var/log/univention/listener_modules/dummy_handler.log`.
+
+
 ## Development setup
 
 The current setup is tailored to be used via `docker compose`:

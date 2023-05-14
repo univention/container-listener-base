@@ -23,10 +23,21 @@ lint-pre-commit:
     - cp .env.listener.example .env.listener
 
 
-build-container-image:
+build-base-image:
   stage: build
   extends: .kaniko
   needs: []
   variables:
+    CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/listener-base"
+    KANIKO_ARGS: "--target=final"
+
+
+build-debug-image:
+  stage: build
+  extends: .kaniko
+  needs: []
+  variables:
+    CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/listener-base-debug"
+    KANIKO_ARGS: "--target=debug"
 
 ...

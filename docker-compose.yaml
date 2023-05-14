@@ -5,7 +5,7 @@ version: '3.8'
 services:
   listener:
     platform: linux/amd64
-    image: gitregistry.knut.univention.de/univention/customers/dataport/upx/container-listener-base:latest
+    image: gitregistry.knut.univention.de/univention/customers/dataport/upx/container-listener-base/listener-base-debug:latest
     build:
       context: .
       args:

@@ -41,7 +41,7 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 
 
-FROM ucs-sources-base
+FROM ucs-sources-base as final
 
 SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
 
@@ -74,13 +74,11 @@ RUN \
 RUN \
   rm /usr/lib/univention-directory-listener/system/*
 
-# TODO: Split into separate stage, so that we have a base listener without any handler
-COPY \
-  ./listener_handler.py \
-  /usr/lib/univention-directory-listener/system/
-
 COPY ./command.sh /
 
 CMD ["/command.sh"]
 
-# [EOF]
+
+FROM final as debug
+
+COPY ./listener_handler.py /usr/lib/univention-directory-listener/system/
