@@ -32,6 +32,7 @@ class AppVersionNotFound(Exception):
 def get_app_version(image_name, docker_env):
     """Retrieves content of /version file from a container"""
     log.info('Retrieving /version from {}', image_name)
+    sh_out.docker.image.ls()
     result = sh_out.docker.run(
         '--rm',
         '--entrypoint=/bin/cat',

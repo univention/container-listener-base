@@ -9,6 +9,7 @@ SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
 
 WORKDIR /root/src/debian/
 
+# hadolint ignore=DL3008
 RUN \
   echo 'debconf debconf/frontend select readline' | debconf-set-selections && \
   apt-get update && \
@@ -19,6 +20,7 @@ RUN \
 COPY sources.list /etc/apt/sources.list.d/15_ucs-online-version.list
 COPY patches/ /root/
 
+# hadolint ignore=DL3003
 RUN \
   chown _apt . && \
   echo 'nameserver 192.168.0.97' > /etc/resolv.conf && \
@@ -54,6 +56,7 @@ SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
 # dependencies
 ###############################################################################
 
+# hadolint ignore=DL3008
 RUN \
   echo 'debconf debconf/frontend select readline' | debconf-set-selections && \
   apt-get update && \
@@ -65,6 +68,7 @@ RUN \
 # postfix
 ###############################################################################
 
+# hadolint ignore=DL3008
 RUN \
   echo "postfix postfix/main_mailer_type string 'Satellite system'" \
     | debconf-set-selections && \
@@ -83,6 +87,7 @@ COPY sources.list /etc/apt/sources.list.d/15_ucs-online-version.list
 COPY --from=deb_builder \
     /root/src/debian/univention-directory-listener_*.deb /root/
 
+# hadolint ignore=DL3008
 RUN \
   echo 'nameserver 192.168.0.97' > /etc/resolv.conf && \
   printf -v URL '%s' \
