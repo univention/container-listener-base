@@ -1,5 +1,6 @@
 /.env.listener
 /ansible/inventory/*.yaml
+/docker-compose.override.yaml
 /lib/__pycache__/
 /secret/*.secret
 /ssl/certs/*.pem

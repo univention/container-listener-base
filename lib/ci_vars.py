@@ -42,7 +42,7 @@ ADDITIONAL_COMPOSE_BUILD_VARS = (
 
 DEFAULT_DOCKER_COMPOSE_BUILD_FILES = (
     '--file docker-compose.yaml'
-    ' --file docker-compose.override.yaml'
+    ' --file docker-compose.build.yaml'
     ' --file docker-compose.prod.yaml'
 )
 

@@ -28,7 +28,7 @@ variables:
 
   DOCKER_COMPOSE_BUILD_FILES:
     ${DOCKER_COMPOSE_PRODUCTION_FILES}
-    --file docker-compose.override.yaml
+    --file docker-compose.build.yaml
 
 default:
   before_script:
