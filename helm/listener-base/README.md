@@ -137,7 +137,7 @@ false
 ""
 </pre>
 </td>
-			<td></td>
+			<td>LDAP access password, base64 encoded. See /etc/ldap.secret on your UCS machine.</td>
 		</tr>
 		<tr>
 			<td>listener_base.ca_cert</td>
@@ -146,7 +146,7 @@ false
 ""
 </pre>
 </td>
-			<td></td>
+			<td>CA certificate of UCS machine, base64 encoded.</td>
 		</tr>
 		<tr>
 			<td>listener_base.ca_cert_file</td>
@@ -164,7 +164,7 @@ false
 ""
 </pre>
 </td>
-			<td></td>
+			<td>Certificate of the ucs machine, base64 encoded.</td>
 		</tr>
 		<tr>
 			<td>listener_base.cert_pem_file</td>

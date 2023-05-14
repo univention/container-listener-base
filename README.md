@@ -19,7 +19,7 @@ The container is published in two variations:
 
 The current setup is tailored to be used via `docker compose`:
 
-```
+```sh
 docker compose up --build
 ```
 
@@ -37,6 +37,20 @@ This can be done with the prepared Ansible playbook.
    ```sh
    ansible-playbook -i ansible/inventory/hosts.yaml ansible/fetch-secrets-from-ucs-machine.yaml
    ```
+
+
+## Helm based installation of the debug listener
+
+Basic support to install the debug image into a Kubernetes cluster is provided
+via a Helm chart. The generated values are created by the Ansible script from
+above.
+
+```sh
+helm upgrade --install \
+  --values ./helm/values-listener-base-generated.yaml \
+  --values ./helm/values-listener-base.yaml \
+  listener-base ./helm/listener-base
+```
 
 
 ## Logged events

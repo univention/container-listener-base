@@ -2,11 +2,14 @@ replicaCount: 1
 
 listener_base:
   environment: "staging"
+  # -- CA certificate of UCS machine, base64 encoded.
   ca_cert: ""
   ca_cert_file: "/var/secrets/ca_cert"
   cert_pem_file: "/var/secrets/cert_pem"
+  # -- Certificate of the ucs machine, base64 encoded.
   cert_pem: ""
   debug_level: "5"
+  # -- LDAP access password, base64 encoded. See /etc/ldap.secret on your UCS machine.
   auth_ldap_secret: ""
   ldap_base_dn: "dc=univention,dc=intranet"
   ldap_bind_secret: "/var/secrets/ldap_secret"
