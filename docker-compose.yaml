@@ -4,6 +4,12 @@ version: '3.8'
 
 services:
   listener:
+    platform: linux/amd64
+    image: gitregistry.knut.univention.de/univention/customers/dataport/upx/container-listener-base:latest
+    build:
+      context: .
+      args:
+        DEBIAN_BASE_IMAGE_TAG: buster-slim
     env_file: .env.listener
     secrets:
       - ca_cert
