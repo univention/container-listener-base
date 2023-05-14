@@ -40,10 +40,10 @@ repos:
   - id: shell-lint
 
 # "Dockerfile linter"
-- repo: https://gitlab.com/univention/pre-commit-hooks/dockerfilelint-precommit-hooks
-  rev: v0.1.0
+- repo: https://gitlab.com/univention/pre-commit-hooks/docker-pre-commit
+  rev: v2.0.0
   hooks:
-  - id: dockerfilelint
+  - id: hadolint-system
 
 # "docker-compose.yaml linter"
 - repo: https://gitlab.com/univention/pre-commit/docker-compose-check
