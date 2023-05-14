@@ -65,7 +65,8 @@ build-with-kaniko:
   extends: .kaniko
   needs: []
   before_script: ""
-  # variables:
+  variables:
+    DOCKERFILE_PATH: "new.Dockerfile"
   #   CI_DEBUG_TRACE: "true"
 
 test-job:

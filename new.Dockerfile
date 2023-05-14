@@ -21,7 +21,8 @@ COPY patches/ /root/
 
 RUN \
   chown _apt . && \
-  echo 'nameserver 192.168.0.97' > /etc/resolv.conf && \
+  # TODO: causing trouble when building locally, why would we need this?
+  # echo 'nameserver 192.168.0.97' > /etc/resolv.conf && \
   printf -v URL '%s' \
     'https://updates.software-univention.de/' \
     'univention-archive-key-ucs-5x.gpg' && \
@@ -84,7 +85,8 @@ COPY --from=deb_builder \
     /root/src/debian/univention-directory-listener_*.deb /root/
 
 RUN \
-  echo 'nameserver 192.168.0.97' > /etc/resolv.conf && \
+  # TODO: Causing trouble when building locally, why is this needed?
+  # echo 'nameserver 192.168.0.97' > /etc/resolv.conf && \
   printf -v URL '%s' \
     'https://updates.software-univention.de/' \
     'univention-archive-key-ucs-5x.gpg' && \

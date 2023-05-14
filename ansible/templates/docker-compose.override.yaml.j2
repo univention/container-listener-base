@@ -8,6 +8,7 @@ services:
     image: artifacts.knut.univention.de/upx/upx-listener-base:latest
     build:
       context: .
+      dockerfile: new.Dockerfile
       args:
         DEBIAN_BASE_IMAGE_TAG: buster-slim
         # DOCKERHUB_CACHE: artifacts.knut.univention.de/dockerhub_proxy_cache/library/
