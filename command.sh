@@ -20,6 +20,8 @@ EOF
 ucr set server/role='memberserver'
 ucr set ldap/master="${LDAP_HOST}"
 ucr set ldap/master/port="${LDAP_PORT}" # 636, 389
+ucr set ldap/hostdn="${LDAP_HOST_DN}"
+ucr set ldap/base="${LDAP_BASE_DN}"
 
 exec "/usr/sbin/univention-directory-listener" \
   -F -x -d "${DEBUG_LEVEL}" \

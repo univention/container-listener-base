@@ -2,6 +2,7 @@ DOMAIN_NAME={{ ansible_domain }}
 LDAP_PORT=389
 LDAP_HOST={{ ansible_fqdn }}
 LDAP_BASE_DN={{ ldap_base.stdout }}
+LDAP_HOST_DN={{ ldap_hostdn.stdout }}
 
 NOTIFIER_SERVER={{ ansible_fqdn }}
 DEBUG_LEVEL=5
