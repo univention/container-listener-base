@@ -8,11 +8,10 @@ stages:
   - publish
 
 include:
-  - project: univention/dist/docker-services
-    file: kaniko.yml
   - project: univention/customers/dataport/upx/common-ci
     file:
       - defaults/souvap-workflow.yaml
+      - templates/kaniko.yaml
       - templates/souvap.yaml
       - jobs/lint-pre-commit.yaml
       - jobs/lint-commit-messages.yaml
@@ -43,15 +42,7 @@ build-debug-image:
     KANIKO_ARGS: "--target=debug"
 
 
-# TODO: Update common-ci based on this. Need two possible publish jobs, one
-# that's locally publishing and one for souvap.
+# TODO: Pending removal once this job has been removed in common-ci
 publish-helm-charts:
-  script:
-    - |
-      for _filename in `find packages -type f`; do
-        curl \
-        --request "POST" \
-        --user gitlab-ci-token:$CI_JOB_TOKEN \
-        --form "chart=@$_filename" \
-        "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/api/stable/charts";
-      done
+  rules:
+    - when: never
