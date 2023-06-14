@@ -6,6 +6,13 @@ mkdir --parents "${target_dir}" "/etc/univention/ssl/ucsCA/"
 ln --symbolic --force "${CA_CERT_FILE}" "/etc/univention/ssl/ucsCA/CAcert.pem"
 ln --symbolic --force "${CERT_PEM_FILE}" "${target_dir}/cert.pem"
 
+
+# Add certificate of root ca
+mkdir /usr/local/share/ca-certificates/ucs-ca
+cp "${CA_CERT_FILE}" /usr/local/share/ca-certificates/ucs-ca/ca_cert.crt
+update-ca-certificates
+
+
 cat <<EOF > /etc/ldap/ldap.conf
 # This file should be world readable but not world writable.
 
