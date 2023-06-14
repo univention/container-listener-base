@@ -12,6 +12,14 @@ mkdir /usr/local/share/ca-certificates/ucs-ca
 cp "${CA_CERT_FILE}" /usr/local/share/ca-certificates/ucs-ca/ca_cert.crt
 update-ca-certificates
 
+state_dir="/var/lib/univention-directory-listener"
+
+current_owner="$(stat -c "%U" "${state_dir}")"
+if [ "${current_owner}" != "listener" ]
+then
+    echo "Trying to adjust owner of directory ${state_dir}"
+    chown -R listener: "${state_dir}"
+fi
 
 cat <<EOF > /etc/ldap/ldap.conf
 # This file should be world readable but not world writable.
