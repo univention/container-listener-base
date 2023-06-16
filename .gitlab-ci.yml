@@ -21,7 +21,7 @@ include:
 lint-pre-commit:
   before_script:
     # Compose lint would fail without the referenced env files
-    - cp .env.listener.example .env.listener
+    - cp .env.example .env
 
 
 build-base-image:

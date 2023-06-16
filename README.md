@@ -20,10 +20,34 @@ The container is published in two variations:
 The current setup is tailored to be used via `docker compose`:
 
 ```sh
-docker compose up --build
+docker compose up
 ```
 
-### Preparation
+### One off preparation
+
+Copy `.env.example` to `.env` and adjust as needed.
+
+Alternative: Ensure that the environment variables are set.
+
+
+### Connect to locally running `ldap-server`
+
+The defaults in the compose file should work with a locally running
+`ldap-server` and `ldap-notifier`.
+
+1. Start the ldap server and notifier from the repository `container-ldap`:
+
+   ```
+   docker compose up
+   ```
+
+2. Start this container from this repository:
+
+   ```
+   docker compose up
+   ```
+
+### Connect to UCS machine (optional)
 
 A few secrets and certificates have to be fetched from the targeted UCS machine.
 This can be done with the prepared Ansible playbook.

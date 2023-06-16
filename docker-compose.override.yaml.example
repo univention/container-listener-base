@@ -1,0 +1,18 @@
+---
+
+services:
+  listener:
+    # Define the hostname of your LDAP server so that the verification of SSL
+    # certifciates works:
+    #
+    # extra_hosts:
+    #   ucs-5746.univention.intranet: "10.200.115.20"
+    environment:
+      # TODO: Adjust those variables to your needs
+      DOMAIN_NAME: "univention-organization.intranet"
+      LDAP_HOST: "${DOCKER_HOST_INTERNAL}"
+      LDAP_BASE_DN: "dc=univention-organization,dc=intranet"
+      NOTIFIER_SERVER: "${DOCKER_HOST_INTERNAL}"
+      TLS_REQCERT: "demand"
+
+...
