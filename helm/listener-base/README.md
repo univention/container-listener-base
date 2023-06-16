@@ -221,6 +221,15 @@ false
 			<td></td>
 		</tr>
 		<tr>
+			<td>listener_base.ldap_host_dn</td>
+			<td>string</td>
+			<td><pre lang="json">
+"cn=ucs-machine,cn=dc,cn=computers,dc=univention,dc=intranet"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
 			<td>listener_base.ldap_host_ip</td>
 			<td>string</td>
 			<td><pre lang="json">
@@ -237,6 +246,15 @@ false
 </pre>
 </td>
 			<td></td>
+		</tr>
+		<tr>
+			<td>listener_base.ldap_tls_reqcert</td>
+			<td>string</td>
+			<td><pre lang="json">
+"demand"
+</pre>
+</td>
+			<td>Allows to set the parameter "TLS_REQCERT" in the ldap client configuration.  The man page of "ldap.conf" does provide details about the allowed values and how this influences the client behavior.  See: https://www.openldap.org/software//man.cgi?query=ldap.conf</td>
 		</tr>
 		<tr>
 			<td>listener_base.notifier_server</td>

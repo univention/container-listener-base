@@ -16,8 +16,10 @@ data:
   LDAP_BASE_DN: "{{ .ldap_base_dn }}"
   LDAP_BIND_SECRET: "{{ .ldap_bind_secret }}"
   LDAP_HOST: "{{ .ldap_host }}"
+  LDAP_HOST_DN: "{{ .ldap_host_dn }}"
   LDAP_PORT: "{{ .ldap_port }}"
   NOTIFIER_SERVER: "{{ default .ldap_host .notifier_server }}"
+  TLS_REQCERT: "{{ .ldap_tls_reqcert }}"
   {{ end }}
 
 ...
