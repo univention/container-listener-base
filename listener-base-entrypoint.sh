@@ -8,9 +8,13 @@ ln --symbolic --force "${CERT_PEM_FILE}" "${target_dir}/cert.pem"
 
 
 # Add certificate of root ca
-mkdir /usr/local/share/ca-certificates/ucs-ca
-cp "${CA_CERT_FILE}" /usr/local/share/ca-certificates/ucs-ca/ca_cert.crt
-update-ca-certificates
+if [ ! -e /usr/local/share/ca-certificates/ucs-ca ]
+then
+    echo "Adding CA_CERT_FILE to system ca certificates bundle"
+    mkdir --parents /usr/local/share/ca-certificates/ucs-ca
+    cp "${CA_CERT_FILE}" /usr/local/share/ca-certificates/ucs-ca/ca_cert.crt
+    update-ca-certificates
+fi
 
 state_dir="/var/lib/univention-directory-listener"
 
