@@ -40,9 +40,3 @@ build-debug-image:
   variables:
     CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/listener-base-debug"
     KANIKO_ARGS: "--target=debug"
-
-
-# TODO: Pending removal once this job has been removed in common-ci
-publish-helm-charts:
-  rules:
-    - when: never
