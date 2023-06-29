@@ -1,32 +1,32 @@
 ---
 
 stages:
-  - lint
-  - build
-  - test
-  - package
-  - publish
+  - "lint"
+  - "build"
+  - "test"
+  - "package"
+  - "publish"
 
 include:
-  - project: univention/customers/dataport/upx/common-ci
+  - project: "univention/customers/dataport/upx/common-ci"
     file:
-      - defaults/souvap-workflow.yaml
-      - templates/kaniko.yaml
-      - templates/souvap.yaml
-      - jobs/lint-pre-commit.yaml
-      - jobs/lint-commit-messages.yaml
-      - jobs/package-and-publish-helm-charts.yaml
+      - "defaults/souvap-workflow.yaml"
+      - "templates/kaniko.yaml"
+      - "templates/souvap.yaml"
+      - "jobs/lint-pre-commit.yaml"
+      - "jobs/lint-commit-messages.yaml"
+      - "jobs/package-and-publish-helm-charts.yaml"
 
 
 lint-pre-commit:
   before_script:
     # Compose lint would fail without the referenced env files
-    - cp .env.example .env
+    - "cp .env.example .env"
 
 
 build-base-image:
-  stage: build
-  extends: .kaniko
+  stage: "build"
+  extends: ".kaniko"
   needs: []
   variables:
     CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/listener-base"
@@ -34,9 +34,11 @@ build-base-image:
 
 
 build-debug-image:
-  stage: build
-  extends: .kaniko
+  stage: "build"
+  extends: ".kaniko"
   needs: []
   variables:
     CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/listener-base-debug"
     KANIKO_ARGS: "--target=debug"
+
+...
