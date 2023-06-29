@@ -16,10 +16,12 @@ services:
       LDAP_PORT: "389"
       LDAP_BASE_DN: "dc=univention-organization,dc=intranet"
       # TODO: Set to a reasonable default value, "container-ldap" does not have this yet.
-      LDAP_HOST_DN: "cn=ucs-5746,cn=dc,cn=computers,dc=univention,dc=intranet"
+      LDAP_HOST_DN: "cn=ucs-5746,cn=dc,cn=computers,dc=univention-organization,dc=intranet"
       NOTIFIER_SERVER: "${DOCKER_HOST_INTERNAL}"
 
       DEBUG_LEVEL: "5"
+      # Whenever to start encryption. Chose from "never", "request" and "require".
+      START_TLS: "never"
       TLS_REQCERT: "never"
       LDAP_BIND_SECRET: "/run/secrets/ldap_secret"
       CA_CERT_FILE: "/run/secrets/ca_cert"

@@ -248,6 +248,15 @@ false
 			<td></td>
 		</tr>
 		<tr>
+			<td>listener_base.ldap_start_tls</td>
+			<td>string</td>
+			<td><pre lang="json">
+"never"
+</pre>
+</td>
+			<td>Whenever to start encryption. Chose from "never", "request" and "require".</td>
+		</tr>
+		<tr>
 			<td>listener_base.ldap_tls_reqcert</td>
 			<td>string</td>
 			<td><pre lang="json">

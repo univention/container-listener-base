@@ -18,6 +18,8 @@ listener_base:
   # -- Will add a mapping from "ldap_host" to "ldap_host_ip" into "/etc/hosts" if set
   ldap_host_ip: ""
   ldap_port: "389"
+  # -- Whenever to start encryption. Chose from "never", "request" and "require".
+  ldap_start_tls: "never"
   # -- Allows to set the parameter "TLS_REQCERT" in the ldap client configuration.
   #
   # The man page of "ldap.conf" does provide details about the allowed values and how

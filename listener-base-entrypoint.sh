@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euxo pipefail
 
+START_TLS="${START_TLS:-require}"
+
 target_dir="/etc/univention/ssl/ucs-6045.${DOMAIN_NAME}"
 mkdir --parents "${target_dir}" "/etc/univention/ssl/ucsCA/"
 ln --symbolic --force "${CA_CERT_FILE}" "/etc/univention/ssl/ucsCA/CAcert.pem"
@@ -43,5 +45,24 @@ ucr set \
     ldap/hostdn="${LDAP_HOST_DN}" \
     ldap/base="${LDAP_BASE_DN}"
 
+case ${START_TLS} in
+  never)
+    TLS_NO=0
+    export TLS_PARAM=""
+    ;;
+
+  request)
+    TLS_NO=1
+    export TLS_PARAM="-Z"
+    ;;
+
+  *)  # require
+    TLS_NO=2
+    export TLS_PARAM="-ZZ"
+    ;;
+esac
+
+find /usr/local/lib/python3.7/dist-packages
+sed --in-place --expression="s/access[(]/access(start_tls=${TLS_NO}, /" /usr/local/lib/python3.7/dist-packages/univention/listener/handler.py
 
 exec "$@"

@@ -19,6 +19,7 @@ data:
   LDAP_HOST_DN: "{{ .ldap_host_dn }}"
   LDAP_PORT: "{{ .ldap_port }}"
   NOTIFIER_SERVER: "{{ default .ldap_host .notifier_server }}"
+  START_TLS: "{{ .ldap_start_tls }}"
   TLS_REQCERT: "{{ .ldap_tls_reqcert }}"
   {{ end }}
 
