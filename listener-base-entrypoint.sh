@@ -136,4 +136,29 @@ chmod 0644 /etc/ldap/ldap.conf
 sed --in-place --expression="s/access[(]/access(start_tls=${TLS_START_NO}, /" \
   "${PYTHON_DIST_PACKAGES}/univention/listener/handler.py"
 
-exec "$@"
+case ${@} in
+  "")
+    echo "Starting UDL with arguments from entrypoint"
+    exec "/usr/sbin/univention-directory-listener" \
+      -F \
+      -x \
+      -d "${DEBUG_LEVEL}" \
+      -b "${LDAP_BASE_DN}" \
+      -D "${LDAP_BIND_DN}" \
+      -n "${NOTIFIER_SERVER}" \
+      -m /usr/lib/univention-directory-listener/system \
+      -c /var/lib/univention-directory-listener \
+      -y "${LDAP_BIND_SECRET}" \
+      -ZZ
+    ;;
+  -*)
+    echo "Starting UDL with arguments from command"
+    exec "/usr/sbin/univention-directory-listener" "${@}"
+    ;;
+  *)
+    echo "Starting command"
+    exec "$@"
+    ;;
+esac
+
+# [EOF]
