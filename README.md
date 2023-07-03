@@ -25,9 +25,9 @@ docker compose up
 
 ### One off preparation
 
-Copy `.env.example` to `.env` and adjust as needed.
+Copy `docker-compose.override.yaml.example` to `docker-compose.override.yaml` and adjust as needed.
 
-Alternative: Ensure that the environment variables are set.
+Alternative: Ensure that the environment variables are set to your needs.
 
 
 ### Connect to locally running `ldap-server`
@@ -59,7 +59,7 @@ This can be done with the prepared Ansible playbook.
 2. Run the playbook:
 
    ```sh
-   ansible-playbook -i ansible/inventory/hosts.yaml ansible/fetch-secrets-from-ucs-machine.yaml
+   ansible-playbook --inventory="ansible/inventory/hosts.yaml" "ansible/fetch-secrets-from-ucs-machine.yaml"
    ```
 
 
@@ -92,7 +92,6 @@ the output of the included dummy handler.
 
 ## Environment configuration
 
-The environment is configured in the file `.env.listener` which will be created
-by the Ansible script mentioned above.
+The environment is configured in file `docker-compose.override.yaml*`.
 
-The variables are documented inside of the file `.env.listener.example`.
+The variables are documented inside of the file `docker-compose.yaml`.

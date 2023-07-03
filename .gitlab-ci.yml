@@ -18,12 +18,6 @@ include:
       - "jobs/package-and-publish-helm-charts.yaml"
 
 
-lint-pre-commit:
-  before_script:
-    # Compose lint would fail without the referenced env files
-    - "cp .env.example .env"
-
-
 build-base-image:
   stage: "build"
   extends: ".kaniko"

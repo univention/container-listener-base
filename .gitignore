@@ -1,4 +1,3 @@
-/.env.listener
 /ansible/inventory/*.yaml
 /docker-compose.override.yaml
 /helm/listener-base/charts/*.tgz
