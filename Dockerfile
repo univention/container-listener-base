@@ -16,7 +16,7 @@ RUN apt-get update \
       gpg \
       gpg-agent \
       libterm-readline-gnu-perl \
-    && rm -fr /var/lib/apt/lists/*  /var/cache/apt/archives/* \
+    && rm -fr /var/lib/apt/lists/* /var/cache/apt/archives/* \
     && curl -fsSL ${APT_KEY_URL} | apt-key add -
 
 COPY sources.list /etc/apt/sources.list.d/15_ucs-online-version.list
@@ -24,7 +24,9 @@ COPY sources.list /etc/apt/sources.list.d/15_ucs-online-version.list
 
 FROM ucs-sources-base as deb_builder
 
-COPY patches/ /root/
+COPY patches/allow_disabling_tls.patch \
+     patches/separate_notifier_address.patch \
+     /root/
 
 WORKDIR /root/src/debian/
 
@@ -35,10 +37,9 @@ RUN \
   apt-get source univention-directory-listener && \
   cd univention-directory-listener-* && \
   patch -p3 < /root/separate_notifier_address.patch && \
+  patch -p3 < /root/allow_disabling_tls.patch && \
   dpkg-buildpackage -uc -us -b && \
-  apt-get  --assume-yes --verbose-versions --no-install-recommends install \
-    /root/src/debian/univention-directory-listener_*.deb && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 
 FROM ucs-sources-base as final
@@ -54,19 +55,24 @@ RUN \
   apt-get update && \
   apt-get --assume-yes --verbose-versions --no-install-recommends install \
     postfix && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 COPY --from=deb_builder \
     /root/src/debian/univention-directory-listener_*.deb /root/
+
+COPY patches/make_uldap_start-tls_configurable.patch /root/
 
 # hadolint ignore=DL3008
 RUN \
   apt-get update && \
   apt-get --assume-yes --verbose-versions --no-install-recommends install \
     /root/univention-directory-listener_*.deb \
+    patch \
     python3-distutils \
     python3-univention-directory-manager && \
-  rm -rf /var/lib/apt/lists/* && \
+  patch -p 0 -d / -i /root/make_uldap_start-tls_configurable.patch && \
+  apt-get purge --auto-remove --assume-yes patch && \
+  rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/* && \
   awk \
     '/^Package: univention-directory-listener$/{ while(!/^Version: /){getline} print $2 }' \
     /var/lib/dpkg/status > /version

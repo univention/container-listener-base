@@ -1,16 +1,22 @@
 #!/bin/bash
 set -euxo pipefail
 
-START_TLS="${START_TLS:-require}"
+# Link certificates in place
+CA_CERT_FILE=${CA_CERT_FILE:-/run/secrets/ca_cert}
 
-target_dir="/etc/univention/ssl/ucs-6045.${DOMAIN_NAME}"
-mkdir --parents "${target_dir}" "/etc/univention/ssl/ucsCA/"
-ln --symbolic --force "${CA_CERT_FILE}" "/etc/univention/ssl/ucsCA/CAcert.pem"
-ln --symbolic --force "${CERT_PEM_FILE}" "${target_dir}/cert.pem"
+if [[ -f "${CA_CERT_FILE}" ]]; then
+  echo "Using provided CA certificate at ${CA_CERT_FILE}"
+  CA_DIR="/etc/univention/ssl/ucsCA"
 
+  mkdir --parents "${CA_DIR}"
+  ln --symbolic --force "${CA_CERT_FILE}" "${CA_DIR}/CAcert.pem"
+else
+  unset CA_DIR
+  echo "No CA certificate provided!"
+fi
 
 # Add certificate of root ca
-if [ ! -e /usr/local/share/ca-certificates/ucs-ca ]
+if [[ -f "${CA_CERT_FILE}" ]] && [[ ! -e /usr/local/share/ca-certificates/ucs-ca ]]
 then
     echo "Adding CA_CERT_FILE to system ca certificates bundle"
     mkdir --parents /usr/local/share/ca-certificates/ucs-ca
@@ -18,6 +24,7 @@ then
     update-ca-certificates
 fi
 
+# Adjust listener's folders' ownership
 state_dir="/var/lib/univention-directory-listener"
 
 current_owner="$(stat -c "%U" "${state_dir}")"
@@ -27,16 +34,30 @@ then
     chown -R listener: "${state_dir}"
 fi
 
+# Configure LDAP client
 cat <<EOF > /etc/ldap/ldap.conf
 # This file should be world readable but not world writable.
 
-TLS_CACERT /etc/univention/ssl/ucsCA/CAcert.pem
+${CA_DIR:+TLS_CACERT /etc/univention/ssl/ucsCA/CAcert.pem}
 TLS_REQCERT ${TLS_REQCERT:-demand}
 
 URI ldap://${LDAP_HOST}:${LDAP_PORT}
 
-BASE	${LDAP_BASE_DN}
+BASE ${LDAP_BASE_DN}
 EOF
+chmod 0644 /etc/ldap/ldap.conf
+
+case "${TLS_REQCERT:-demand}" in
+  "never")
+    ucr set uldap/start-tls=0
+    ;;
+  "allow" | "try")
+    ucr set uldap/start-tls=1
+    ;;
+  *)
+    ucr set uldap/start-tls=2
+    ;;
+esac
 
 ucr set \
     server/role="memberserver" \

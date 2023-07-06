@@ -3,7 +3,7 @@
 services:
   listener:
     platform: linux/amd64
-    image: gitregistry.knut.univention.de/univention/customers/dataport/upx/container-listener-base/listener-base-debug:latest
+    image: gitregistry.knut.univention.de/univention/customers/dataport/upx/container-listener-base/listener-base:latest
     build:
       context: .
       args:
@@ -28,7 +28,6 @@ services:
       CERT_PEM_FILE: "/run/secrets/cert_pem"
     secrets:
       - ca_cert
-      - cert_pem
       - ldap_secret
     volumes:
       - listener-data:/var/lib/univention-directory-listener/:rw
@@ -36,8 +35,6 @@ services:
 secrets:
   ca_cert:
     file: ssl/certs/CAcert.pem
-  cert_pem:
-    file: ssl/certs/cert.pem
   ldap_secret:
     file: secret/ldap.secret
 volumes:

@@ -1,0 +1,37 @@
+Origin: https://git.knut.univention.de/univention/ucs/-/merge_requests/825
+Author: Thomas Kintscher <thomas.kintscher.extern@univention.de>
+Date:   Tue Jul 4 17:27:44 2023 +0200
+
+    feat(univention-directory-listener): add `-z` flag to disable StartTLS
+
+diff --git a/management/univention-directory-listener/src/main.c b/management/univention-directory-listener/src/main.c
+index 79bc83a61c..d216e10bdb 100644
+--- a/management/univention-directory-listener/src/main.c
++++ b/management/univention-directory-listener/src/main.c
+@@ -227,6 +227,7 @@
+ 	fprintf(stderr, "   -y   read LDAP bind password from file\n");
+ 	fprintf(stderr, "   -x   LDAP simple bind\n");
+ 	fprintf(stderr, "   -Z   LDAP start TLS request (-ZZ to require successful response)\n");
++	fprintf(stderr, "   -z   LDAP optional TLS (-zz to disable TLS entirely)\n");
+ 	fprintf(stderr, "   -Y   SASL mechanism\n");
+ 	fprintf(stderr, "   -U   SASL username\n");
+ 	fprintf(stderr, "   -R   SASL realm\n");
+@@ -414,7 +415,7 @@
+ 	for (;;) {
+ 		int c;
+ 
+-		c = getopt(argc, argv, "d:FH:h:n:p:b:D:w:y:xZY:U:R:Km:Bc:giol:P");
++		c = getopt(argc, argv, "d:FH:h:n:p:b:D:w:y:xZzY:U:R:Km:Bc:giol:P");
+ 		if (c < 0)
+ 			break;
+ 		switch (c) {
+@@ -466,6 +467,9 @@
+ 		case 'Z':
+ 			lp->start_tls++;
+ 			break;
++		case 'z':
++			lp->start_tls--;
++			break;
+ 		case 'x':
+ 			lp->authmethod = LDAP_AUTH_SIMPLE;
+ 			break;
