@@ -1,7 +1,7 @@
 listener_base:
   ca_cert: "{{ ca_cert.content }}"
   auth_ldap_secret: "{{ ldap_secret.content }}"
-  ldap_host: "{{ ansible_fqdn }}"
-  ldap_host_ip: "{{ ansible_host }}"
-  ldap_host_dn: "{{ ldap_hostdn.stdout }}"
+  ldapHost: "{{ ansible_fqdn }}"
+  ldapHostIp: "{{ ansible_host }}"
+  ldapHostDn: "{{ ldap_hostdn.stdout }}"
   ldap_tls_reqcert: "never"

@@ -113,6 +113,15 @@ false
 			<td></td>
 		</tr>
 		<tr>
+			<td>image.sha256</td>
+			<td>string</td>
+			<td><pre lang="json">
+null
+</pre>
+</td>
+			<td>Define image sha256 as an alternative to `tag`</td>
+		</tr>
+		<tr>
 			<td>image.tag</td>
 			<td>string</td>
 			<td><pre lang="json">
@@ -131,31 +140,13 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>listenerBase.authLdapSecret</td>
-			<td>string</td>
-			<td><pre lang="json">
-""
-</pre>
-</td>
-			<td>LDAP access password, base64 encoded. See /etc/ldap.secret on your UCS machine.</td>
-		</tr>
-		<tr>
 			<td>listenerBase.caCert</td>
 			<td>string</td>
 			<td><pre lang="json">
-""
+null
 </pre>
 </td>
-			<td>CA certificate of UCS machine, base64 encoded.</td>
-		</tr>
-		<tr>
-			<td>listenerBase.caCertFile</td>
-			<td>string</td>
-			<td><pre lang="json">
-"/var/secrets/ca_cert"
-</pre>
-</td>
-			<td></td>
+			<td>CA root certificate. Optional; will be written to "caCertFile" if set.</td>
 		</tr>
 		<tr>
 			<td>listenerBase.debugLevel</td>
@@ -164,13 +155,13 @@ false
 "5"
 </pre>
 </td>
-			<td></td>
+			<td>Where to search for the CA Certificate file. caCertFile: "/var/secrets/ca_cert"</td>
 		</tr>
 		<tr>
 			<td>listenerBase.environment</td>
 			<td>string</td>
 			<td><pre lang="json">
-"staging"
+"production"
 </pre>
 </td>
 			<td></td>
@@ -179,16 +170,7 @@ false
 			<td>listenerBase.ldapBaseDn</td>
 			<td>string</td>
 			<td><pre lang="json">
-"dc=univention,dc=intranet"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>listenerBase.ldapBindSecret</td>
-			<td>string</td>
-			<td><pre lang="json">
-"/var/secrets/ldap_secret"
+null
 </pre>
 </td>
 			<td></td>
@@ -206,7 +188,7 @@ false
 			<td>listenerBase.ldapHostDn</td>
 			<td>string</td>
 			<td><pre lang="json">
-"cn=ucs-machine,cn=dc,cn=computers,dc=univention,dc=intranet"
+null
 </pre>
 </td>
 			<td></td>
@@ -215,10 +197,28 @@ false
 			<td>listenerBase.ldapHostIp</td>
 			<td>string</td>
 			<td><pre lang="json">
-""
+null
 </pre>
 </td>
 			<td>Will add a mapping from "ldapHost" to "ldapHostIp" into "/etc/hosts" if set</td>
+		</tr>
+		<tr>
+			<td>listenerBase.ldapPassword</td>
+			<td>string</td>
+			<td><pre lang="json">
+null
+</pre>
+</td>
+			<td>LDAP password for `cn=admin`. Will be written to "ldapPasswordFile" if set.</td>
+		</tr>
+		<tr>
+			<td>listenerBase.ldapPasswordFile</td>
+			<td>string</td>
+			<td><pre lang="json">
+null
+</pre>
+</td>
+			<td>The path to the "ldapPasswordFile" docker secret or a plain file</td>
 		</tr>
 		<tr>
 			<td>listenerBase.ldapPort</td>
@@ -230,31 +230,22 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>listenerBase.ldapStartTls</td>
-			<td>string</td>
-			<td><pre lang="json">
-"never"
-</pre>
-</td>
-			<td>Whenever to start encryption. Chose from "never", "request" and "require".</td>
-		</tr>
-		<tr>
-			<td>listenerBase.ldapTlsReqcert</td>
-			<td>string</td>
-			<td><pre lang="json">
-"demand"
-</pre>
-</td>
-			<td>Allows to set the parameter "TLS_REQCERT" in the ldap client configuration.  The man page of "ldap.conf" does provide details about the allowed values and how this influences the client behavior.  See: https://www.openldap.org/software//man.cgi?query=ldap.conf</td>
-		</tr>
-		<tr>
 			<td>listenerBase.notifierServer</td>
 			<td>string</td>
 			<td><pre lang="json">
-""
+null
 </pre>
 </td>
 			<td>Defaults to "ldapHost" if not set.</td>
+		</tr>
+		<tr>
+			<td>listenerBase.tlsMode</td>
+			<td>string</td>
+			<td><pre lang="json">
+"secure"
+</pre>
+</td>
+			<td>Whether to start encryption and validate certificates. Chose from "off", "unvalidated" and "secure".</td>
 		</tr>
 		<tr>
 			<td>nameOverride</td>

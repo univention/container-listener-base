@@ -1,26 +1,22 @@
 #!/bin/bash
-set -euxo pipefail
 
-case "${TLS_REQCERT:-demand}" in
-  "never")
-    TLS_FLAGS="-zz"
-    ;;
-  "allow" | "try")
-    TLS_FLAGS="-z"
-    ;;
-  *)
-    TLS_FLAGS="-ZZ"
-    ;;
-esac
+# abort on nonzero exitstatus
+set -o errexit
+# abort on unbound variable
+set -o nounset
+# don't hide errors within pipes
+set -o pipefail
 
 exec "/usr/sbin/univention-directory-listener" \
-  -F -x -d "${DEBUG_LEVEL}" \
+  -F \
+  -x \
+  -d "${DEBUG_LEVEL}" \
   -b "${LDAP_BASE_DN}" \
   -D "cn=admin,${LDAP_BASE_DN}" \
   -n "${NOTIFIER_SERVER}" \
-  -m /usr/lib/univention-directory-listener/system \
-  -c /var/lib/univention-directory-listener \
-  -y "${LDAP_BIND_SECRET}" \
-  "${TLS_FLAGS}"
+  -m "/usr/lib/univention-directory-listener/system" \
+  -c "/var/lib/univention-directory-listener" \
+  -y "${LDAP_PASSWORD_FILE}" \
+  "${TLS_START_FLAGS}"
 
 # [EOF]

@@ -3,37 +3,35 @@
 replicaCount: 1
 
 listenerBase:
-  environment: "staging"
-  # -- CA certificate of UCS machine, base64 encoded.
-  caCert: ""
-  caCertFile: "/var/secrets/ca_cert"
+  environment: "production"
+  # -- CA root certificate. Optional; will be written to "caCertFile" if set.
+  caCert: null
+  # -- Where to search for the CA Certificate file.
+  # caCertFile: "/var/secrets/ca_cert"
   debugLevel: "5"
-  # -- LDAP access password, base64 encoded. See /etc/ldap.secret on your UCS machine.
-  authLdapSecret: ""
-  ldapBaseDn: "dc=univention,dc=intranet"
-  ldapBindSecret: "/var/secrets/ldap_secret"
+  ldapBaseDn: null
+  # -- LDAP password for `cn=admin`. Will be written to "ldapPasswordFile" if set.
+  ldapPassword: null
+  # -- The path to the "ldapPasswordFile" docker secret or a plain file
+  ldapPasswordFile: null
   ldapHost: "ucs-machine"
-  ldapHostDn: "cn=ucs-machine,cn=dc,cn=computers,dc=univention,dc=intranet"
+  ldapHostDn: null
   # -- Will add a mapping from "ldapHost" to "ldapHostIp" into "/etc/hosts" if set
-  ldapHostIp: ""
+  ldapHostIp: null
   ldapPort: "389"
-  # -- Whenever to start encryption. Chose from "never", "request" and "require".
-  ldapStartTls: "never"
-  # -- Allows to set the parameter "TLS_REQCERT" in the ldap client configuration.
-  #
-  # The man page of "ldap.conf" does provide details about the allowed values and how
-  # this influences the client behavior.
-  #
-  # See: https://www.openldap.org/software//man.cgi?query=ldap.conf
-  ldapTlsReqcert: "demand"
   # -- Defaults to "ldapHost" if not set.
-  notifierServer: ""
+  notifierServer: null
+  # -- Whether to start encryption and validate certificates.
+  # Chose from "off", "unvalidated" and "secure".
+  tlsMode: "secure"
 
 image:
   registry: "gitregistry.knut.univention.de"
   repository: "univention/customers/dataport/upx/container-listener-base/listener-base-debug"
   pullPolicy: "Always"
   tag: "latest"
+  # -- Define image sha256 as an alternative to `tag`
+  sha256: null
 
 imagePullSecrets: []
 nameOverride: ""

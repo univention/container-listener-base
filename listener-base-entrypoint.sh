@@ -1,32 +1,112 @@
 #!/bin/bash
-set -euxo pipefail
 
-# Link certificates in place
-CA_CERT_FILE=${CA_CERT_FILE:-/run/secrets/ca_cert}
+# abort on nonzero exitstatus
+set -o errexit
+# abort on unbound variable
+set -o nounset
+# don't hide errors within pipes
+set -o pipefail
 
-if [[ -f "${CA_CERT_FILE}" ]]; then
-  echo "Using provided CA certificate at ${CA_CERT_FILE}"
-  CA_DIR="/etc/univention/ssl/ucsCA"
 
-  mkdir --parents "${CA_DIR}"
-  ln --symbolic --force "${CA_CERT_FILE}" "${CA_DIR}/CAcert.pem"
+# Set sane dafaults for some optional variables
+# Variables used by `command.sh` need to be exported
+LDAP_HOST="${LDAP_HOST:-}"
+LDAP_PORT="${LDAP_PORT:-389}"
+LDAP_PASSWORD="${LDAP_PASSWORD:-}"
+export LDAP_PASSWORD_FILE="${LDAP_PASSWORD_FILE:-/run/secrets/ldap_secret}"
+export LDAP_BASE_DN="${LDAP_BASE_DN:-}"
+LDAP_HOST_DN="${LDAP_HOST_DN:-}"
+export NOTIFIER_SERVER="${NOTIFIER_SERVER:-}"
+CA_CERT="${CA_CERT:-}"
+CA_CERT_FILE="${CA_CERT_FILE:-/run/secrets/ca_cert}"
+TLS_MODE="${TLS_MODE:-secure}"
+export DEBUG_LEVEL="${DEBUG_LEVEL:-5}"
+export PYTHON_DIST_PACKAGES="${PYTHON_DIST_PACKAGES:-/usr/lib/python3/dist-packages}"
+
+# Test variables which should not be empty
+check_unset_variables() {
+  # Also list here the variables needed by ucr-light-filter
+  var_names=(
+    "LDAP_HOST"
+    "LDAP_BASE_DN"
+    "LDAP_HOST_DN"
+    "NOTIFIER_SERVER"
+  )
+  for var_name in "${var_names[@]}"; do
+    if [[ -z "${!var_name:-}" ]]; then
+      echo "ERROR: '${var_name}' is unset."
+      var_unset=true
+    fi
+  done
+
+  if [[ -n "${var_unset:-}" ]]; then
+    exit 1
+  fi
+}
+check_unset_variables
+
+# Handle the LDAP secret
+if [[ -s "${LDAP_PASSWORD_FILE}" ]]; then
+  echo "Using LDAP password from file"
+elif [[ -n "${LDAP_PASSWORD:-}" ]]; then
+  echo "Using LDAP password secret from env"
+  mkdir --parents "$(dirname "${LDAP_PASSWORD_FILE}")"
+  echo -n "${LDAP_PASSWORD}" > "${LDAP_PASSWORD_FILE}"
 else
-  unset CA_DIR
-  echo "No CA certificate provided!"
+  echo "No LDAP password found in ${LDAP_PASSWORD_FILE}."
+  echo "Either set \"LDAP_PASSWORD\" or write a secret to \"LDAP_PASSWORD_FILE\"!"
+  exit 2
 fi
 
-# Add certificate of root ca
-if [[ -f "${CA_CERT_FILE}" ]] && [[ ! -e /usr/local/share/ca-certificates/ucs-ca ]]
-then
-    echo "Adding CA_CERT_FILE to system ca certificates bundle"
-    mkdir --parents /usr/local/share/ca-certificates/ucs-ca
-    cp "${CA_CERT_FILE}" /usr/local/share/ca-certificates/ucs-ca/ca_cert.crt
-    update-ca-certificates
+if [[ -s "${CA_CERT_FILE}" ]]; then
+  echo "Using CA Certificate from file"
+elif [[ -n "${CA_CERT-}" ]]; then
+  echo "Using CA Certificate from env"
+  mkdir --parents "$(dirname "${CA_CERT_FILE}")"
+  echo -n "${CA_CERT}" > "${CA_CERT_FILE}"
+else
+  echo "No CA Certificate found in ${CA_CERT_FILE}."
+  echo "Either set \"CA_CERT\" or write a secret to \"CA_CERT_FILE\"!"
+fi
+
+case "${TLS_MODE}" in
+  "off")
+    TLS_START_NO=0
+    export TLS_START_FLAGS="-zz"
+    TLS_REQCERT="never"
+    ;;
+  "unvalidated")
+    TLS_START_NO=2
+    export TLS_START_FLAGS=""
+    TLS_REQCERT="never"
+    ;;
+  *)  # secure
+    TLS_START_NO=2
+    export TLS_START_FLAGS=""
+    TLS_REQCERT="demand"
+    ;;
+esac
+
+if [[ "${TLS_REQCERT}" != "never" ]]; then
+  if [[ ! -s "${CA_CERT_FILE}" ]]; then
+    echo "Certificate validation enabled but no CA certificate provided!"
+    exit 1
+  fi
+  echo "Using provided CA certificate at ${CA_CERT_FILE}"
+
+  CA_DIR="/etc/univention/ssl/ucsCA"
+  mkdir --parents "${CA_DIR}"
+  ln --symbolic --force "${CA_CERT_FILE}" "${CA_DIR}/CAcert.pem"
+
+  echo "Adding CA_CERT_FILE to system ca certificates bundle"
+  CA_CERT_DIR="/usr/local/share/ca-certificates/ucs-ca"
+  mkdir --parents "${CA_CERT_DIR}"
+  ln --symbolic --force "${CA_CERT_FILE}" "${CA_CERT_DIR}/ca_cert.crt"
+  update-ca-certificates
 fi
 
 # Adjust listener's folders' ownership
 state_dir="/var/lib/univention-directory-listener"
-
 current_owner="$(stat -c "%U" "${state_dir}")"
 if [ "${current_owner}" != "listener" ]
 then
@@ -38,8 +118,8 @@ fi
 cat <<EOF > /etc/ldap/ldap.conf
 # This file should be world readable but not world writable.
 
-${CA_DIR:+TLS_CACERT /etc/univention/ssl/ucsCA/CAcert.pem}
-TLS_REQCERT ${TLS_REQCERT:-demand}
+${CA_DIR:+TLS_CACERT ${CA_DIR}/CAcert.pem}
+TLS_REQCERT ${TLS_REQCERT}
 
 URI ldap://${LDAP_HOST}:${LDAP_PORT}
 
@@ -54,23 +134,11 @@ chmod 0644 /etc/ldap/ldap.conf
     ldap/master/port="${LDAP_PORT}" \
     ldap/hostdn="${LDAP_HOST_DN}" \
     ldap/base="${LDAP_BASE_DN}" \
+    uldap/start-tls="${TLS_START_NO}" \
     listener/debug/level="${DEBUG_LEVEL}"
 
-case ${START_TLS} in
-  never)
-    ucr set uldap/start-tls=0
-    export TLS_PARAM=""
-    ;;
-
-  request)
-    ucr set uldap/start-tls=1
-    export TLS_PARAM="-Z"
-    ;;
-
-  *)  # require
-    ucr set uldap/start-tls=2
-    export TLS_PARAM="-ZZ"
-    ;;
-esac
+# Patch StartTLS mode neither controlled by arguments nor ucr nor env-vars
+sed --in-place --expression="s/access[(]/access(start_tls=${TLS_START_NO}, /" \
+  "${PYTHON_DIST_PACKAGES}/univention/listener/handler.py"
 
 exec "$@"

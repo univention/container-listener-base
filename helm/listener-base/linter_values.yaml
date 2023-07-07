@@ -1,0 +1,15 @@
+---
+
+listenerBase:
+  environment: "staging"
+  caCert: "s3cr3t"
+  caCertFile: "/var/secrets/ca_cert"
+  debugLevel: "5"
+  ldapBaseDn: "dc=univention,dc=intranet"
+  ldapPassword: "s3cr3t"
+  ldapPasswordFile: "/var/secrets/ldap_secret"
+  ldapHost: "ucs-machine"
+  ldapHostDn: "cn=ucs-machine,cn=dc,cn=computers,dc=univention,dc=intranet"
+  tlsMode: "unvalidated"
+
+...

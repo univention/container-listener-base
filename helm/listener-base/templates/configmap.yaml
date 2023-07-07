@@ -8,17 +8,18 @@ metadata:
     {{- include "common.labels.standard" . | nindent 4 }}
 data:
   {{ with .Values.listenerBase }}
+  CA_CERT: "{{ .caCert }}"
   CA_CERT_FILE: "{{ .caCertFile }}"
   DEBUG_LEVEL: "{{ .debugLevel }}"
   ENVIRONMENT: "{{ .environment }}"
   LDAP_BASE_DN: "{{ .ldapBaseDn }}"
-  LDAP_BIND_SECRET: "{{ .ldapBindSecret }}"
+  LDAP_PASSWORD: "{{ .ldapPassword }}"
+  LDAP_PASSWORD_FILE: "{{ .ldapPasswordFile }}"
   LDAP_HOST: "{{ .ldapHost }}"
   LDAP_HOST_DN: "{{ .ldapHostDn }}"
   LDAP_PORT: "{{ .ldapPort }}"
   NOTIFIER_SERVER: "{{ default .ldapHost .notifierServer }}"
-  START_TLS: "{{ .ldapStartTls }}"
-  TLS_REQCERT: "{{ .ldapTlsReqcert }}"
+  TLS_MODE: "{{ .tlsMode }}"
   {{ end }}
 
 ...
