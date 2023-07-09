@@ -1,5 +1,7 @@
-apiVersion: apps/v1
-kind: StatefulSet
+---
+
+apiVersion: "apps/v1"
+kind: "StatefulSet"
 metadata:
   name: {{ include "common.names.fullname" . }}
   labels:
@@ -45,18 +47,18 @@ spec:
             - configMapRef:
                 name: {{ include "common.names.fullname" . }}
           ports:
-            - name: http
+            - name: "http"
               containerPort: 80
-              protocol: TCP
+              protocol: "TCP"
           volumeMounts:
-            - name: secrets
-              mountPath: /var/secrets
-            - name: data
-              mountPath: /var/lib/univention-directory-listener
+            - name: "secrets"
+              mountPath: "/var/secrets"
+            - name: "data"
+              mountPath: "/var/lib/univention-directory-listener"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
-      - name: secrets
+      - name: "secrets"
         secret:
           secretName: {{ include "common.names.fullname" . | quote }}
       {{- with .Values.nodeSelector }}
@@ -73,9 +75,11 @@ spec:
       {{- end }}
   volumeClaimTemplates:
   - metadata:
-      name: data
+      name: "data"
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: 1Gi
+          storage: "1Gi"
+
+...
