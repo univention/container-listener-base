@@ -1,6 +1,5 @@
 listener_base:
   ca_cert: "{{ ca_cert.content }}"
-  cert_pem: "{{ cert_pem.content }}"
   auth_ldap_secret: "{{ ldap_secret.content }}"
   ldap_host: "{{ ansible_fqdn }}"
   ldap_host_ip: "{{ ansible_host }}"

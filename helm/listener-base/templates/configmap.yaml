@@ -9,7 +9,6 @@ metadata:
 data:
   {{ with .Values.listenerBase }}
   CA_CERT_FILE: "{{ .caCertFile }}"
-  CERT_PEM_FILE: "{{ .certPemFile }}"
   DEBUG_LEVEL: "{{ .debugLevel }}"
   DOMAIN_NAME: "{{ .domainName }}"
   ENVIRONMENT: "{{ .environment }}"

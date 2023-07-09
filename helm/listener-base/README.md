@@ -158,24 +158,6 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>listenerBase.certPem</td>
-			<td>string</td>
-			<td><pre lang="json">
-""
-</pre>
-</td>
-			<td>Certificate of the ucs machine, base64 encoded.</td>
-		</tr>
-		<tr>
-			<td>listenerBase.certPemFile</td>
-			<td>string</td>
-			<td><pre lang="json">
-"/var/secrets/cert_pem"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
 			<td>listenerBase.debugLevel</td>
 			<td>string</td>
 			<td><pre lang="json">

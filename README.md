@@ -89,8 +89,6 @@ the output of the included dummy handler.
 
 - `ssl/certs/CAcert.pem` - Contains the CA certificate from the UCS machine.
 
-- `ssl/certs/cert.pem` - Contains the certificate of the UCS machine.
-
 
 ## Environment configuration
 
