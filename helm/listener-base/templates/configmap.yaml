@@ -7,20 +7,20 @@ metadata:
   labels:
     {{- include "common.labels.standard" . | nindent 4 }}
 data:
-  {{ with .Values.listener_base }}
-  CA_CERT_FILE: "{{ .ca_cert_file }}"
-  CERT_PEM_FILE: "{{ .cert_pem_file }}"
-  DEBUG_LEVEL: "{{ .debug_level }}"
-  DOMAIN_NAME: "{{ .domain_name }}"
+  {{ with .Values.listenerBase }}
+  CA_CERT_FILE: "{{ .caCertFile }}"
+  CERT_PEM_FILE: "{{ .certPemFile }}"
+  DEBUG_LEVEL: "{{ .debugLevel }}"
+  DOMAIN_NAME: "{{ .domainName }}"
   ENVIRONMENT: "{{ .environment }}"
-  LDAP_BASE_DN: "{{ .ldap_base_dn }}"
-  LDAP_BIND_SECRET: "{{ .ldap_bind_secret }}"
-  LDAP_HOST: "{{ .ldap_host }}"
-  LDAP_HOST_DN: "{{ .ldap_host_dn }}"
-  LDAP_PORT: "{{ .ldap_port }}"
-  NOTIFIER_SERVER: "{{ default .ldap_host .notifier_server }}"
-  START_TLS: "{{ .ldap_start_tls }}"
-  TLS_REQCERT: "{{ .ldap_tls_reqcert }}"
+  LDAP_BASE_DN: "{{ .ldapBaseDn }}"
+  LDAP_BIND_SECRET: "{{ .ldapBindSecret }}"
+  LDAP_HOST: "{{ .ldapHost }}"
+  LDAP_HOST_DN: "{{ .ldapHostDn }}"
+  LDAP_PORT: "{{ .ldapPort }}"
+  NOTIFIER_SERVER: "{{ default .ldapHost .notifierServer }}"
+  START_TLS: "{{ .ldapStartTls }}"
+  TLS_REQCERT: "{{ .ldapTlsReqcert }}"
   {{ end }}
 
 ...

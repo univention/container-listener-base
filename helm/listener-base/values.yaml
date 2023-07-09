@@ -1,34 +1,34 @@
 replicaCount: 1
 
-listener_base:
+listenerBase:
   environment: "staging"
   # -- CA certificate of UCS machine, base64 encoded.
-  ca_cert: ""
-  ca_cert_file: "/var/secrets/ca_cert"
-  cert_pem_file: "/var/secrets/cert_pem"
+  caCert: ""
+  caCertFile: "/var/secrets/ca_cert"
+  certPemFile: "/var/secrets/cert_pem"
   # -- Certificate of the ucs machine, base64 encoded.
-  cert_pem: ""
-  debug_level: "5"
+  certPem: ""
+  debugLevel: "5"
   # -- LDAP access password, base64 encoded. See /etc/ldap.secret on your UCS machine.
-  auth_ldap_secret: ""
-  ldap_base_dn: "dc=univention,dc=intranet"
-  ldap_bind_secret: "/var/secrets/ldap_secret"
-  ldap_host: "ucs-machine"
-  ldap_host_dn: "cn=ucs-machine,cn=dc,cn=computers,dc=univention,dc=intranet"
-  # -- Will add a mapping from "ldap_host" to "ldap_host_ip" into "/etc/hosts" if set
-  ldap_host_ip: ""
-  ldap_port: "389"
+  authLdapSecret: ""
+  ldapBaseDn: "dc=univention,dc=intranet"
+  ldapBindSecret: "/var/secrets/ldap_secret"
+  ldapHost: "ucs-machine"
+  ldapHostDn: "cn=ucs-machine,cn=dc,cn=computers,dc=univention,dc=intranet"
+  # -- Will add a mapping from "ldapHost" to "ldapHostIp" into "/etc/hosts" if set
+  ldapHostIp: ""
+  ldapPort: "389"
   # -- Whenever to start encryption. Chose from "never", "request" and "require".
-  ldap_start_tls: "never"
+  ldapStartTls: "never"
   # -- Allows to set the parameter "TLS_REQCERT" in the ldap client configuration.
   #
   # The man page of "ldap.conf" does provide details about the allowed values and how
   # this influences the client behavior.
   #
   # See: https://www.openldap.org/software//man.cgi?query=ldap.conf
-  ldap_tls_reqcert: "demand"
-  # -- Defaults to "ldap_host" if not set.
-  notifier_server: ""
+  ldapTlsReqcert: "demand"
+  # -- Defaults to "ldapHost" if not set.
+  notifierServer: ""
 
 image:
   registry: "gitregistry.knut.univention.de"

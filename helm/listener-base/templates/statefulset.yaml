@@ -29,11 +29,11 @@ spec:
       serviceAccountName: {{ include "common.names.fullname" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      {{- if .Values.listener_base.ldap_host_ip }}
+      {{- if .Values.listenerBase.ldapHostIp }}
       hostAliases:
         - hostnames:
-            - {{ .Values.listener_base.ldap_host | quote }}
-          ip: {{ .Values.listener_base.ldap_host_ip | quote }}
+            - {{ .Values.listenerBase.ldapHost | quote }}
+          ip: {{ .Values.listenerBase.ldapHostIp | quote }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}

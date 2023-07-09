@@ -131,7 +131,7 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>listener_base.auth_ldap_secret</td>
+			<td>listenerBase.authLdapSecret</td>
 			<td>string</td>
 			<td><pre lang="json">
 ""
@@ -140,7 +140,7 @@ false
 			<td>LDAP access password, base64 encoded. See /etc/ldap.secret on your UCS machine.</td>
 		</tr>
 		<tr>
-			<td>listener_base.ca_cert</td>
+			<td>listenerBase.caCert</td>
 			<td>string</td>
 			<td><pre lang="json">
 ""
@@ -149,7 +149,7 @@ false
 			<td>CA certificate of UCS machine, base64 encoded.</td>
 		</tr>
 		<tr>
-			<td>listener_base.ca_cert_file</td>
+			<td>listenerBase.caCertFile</td>
 			<td>string</td>
 			<td><pre lang="json">
 "/var/secrets/ca_cert"
@@ -158,7 +158,7 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>listener_base.cert_pem</td>
+			<td>listenerBase.certPem</td>
 			<td>string</td>
 			<td><pre lang="json">
 ""
@@ -167,7 +167,7 @@ false
 			<td>Certificate of the ucs machine, base64 encoded.</td>
 		</tr>
 		<tr>
-			<td>listener_base.cert_pem_file</td>
+			<td>listenerBase.certPemFile</td>
 			<td>string</td>
 			<td><pre lang="json">
 "/var/secrets/cert_pem"
@@ -176,7 +176,7 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>listener_base.debug_level</td>
+			<td>listenerBase.debugLevel</td>
 			<td>string</td>
 			<td><pre lang="json">
 "5"
@@ -185,7 +185,7 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>listener_base.environment</td>
+			<td>listenerBase.environment</td>
 			<td>string</td>
 			<td><pre lang="json">
 "staging"
@@ -194,7 +194,7 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>listener_base.ldap_base_dn</td>
+			<td>listenerBase.ldapBaseDn</td>
 			<td>string</td>
 			<td><pre lang="json">
 "dc=univention,dc=intranet"
@@ -203,7 +203,7 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>listener_base.ldap_bind_secret</td>
+			<td>listenerBase.ldapBindSecret</td>
 			<td>string</td>
 			<td><pre lang="json">
 "/var/secrets/ldap_secret"
@@ -212,7 +212,7 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>listener_base.ldap_host</td>
+			<td>listenerBase.ldapHost</td>
 			<td>string</td>
 			<td><pre lang="json">
 "ucs-machine"
@@ -221,7 +221,7 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>listener_base.ldap_host_dn</td>
+			<td>listenerBase.ldapHostDn</td>
 			<td>string</td>
 			<td><pre lang="json">
 "cn=ucs-machine,cn=dc,cn=computers,dc=univention,dc=intranet"
@@ -230,16 +230,16 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>listener_base.ldap_host_ip</td>
+			<td>listenerBase.ldapHostIp</td>
 			<td>string</td>
 			<td><pre lang="json">
 ""
 </pre>
 </td>
-			<td>Will add a mapping from "ldap_host" to "ldap_host_ip" into "/etc/hosts" if set</td>
+			<td>Will add a mapping from "ldapHost" to "ldapHostIp" into "/etc/hosts" if set</td>
 		</tr>
 		<tr>
-			<td>listener_base.ldap_port</td>
+			<td>listenerBase.ldapPort</td>
 			<td>string</td>
 			<td><pre lang="json">
 "389"
@@ -248,7 +248,7 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>listener_base.ldap_start_tls</td>
+			<td>listenerBase.ldapStartTls</td>
 			<td>string</td>
 			<td><pre lang="json">
 "never"
@@ -257,7 +257,7 @@ false
 			<td>Whenever to start encryption. Chose from "never", "request" and "require".</td>
 		</tr>
 		<tr>
-			<td>listener_base.ldap_tls_reqcert</td>
+			<td>listenerBase.ldapTlsReqcert</td>
 			<td>string</td>
 			<td><pre lang="json">
 "demand"
@@ -266,13 +266,13 @@ false
 			<td>Allows to set the parameter "TLS_REQCERT" in the ldap client configuration.  The man page of "ldap.conf" does provide details about the allowed values and how this influences the client behavior.  See: https://www.openldap.org/software//man.cgi?query=ldap.conf</td>
 		</tr>
 		<tr>
-			<td>listener_base.notifier_server</td>
+			<td>listenerBase.notifierServer</td>
 			<td>string</td>
 			<td><pre lang="json">
 ""
 </pre>
 </td>
-			<td>Defaults to "ldap_host" if not set.</td>
+			<td>Defaults to "ldapHost" if not set.</td>
 		</tr>
 		<tr>
 			<td>nameOverride</td>
