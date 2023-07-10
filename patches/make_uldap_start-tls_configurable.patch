@@ -1,5 +1,5 @@
 diff --git a/base/univention-python/modules/uldap.py b/base/univention-python/modules/uldap.py
-index 1f57fa7f78..099ff99546 100644
+index 1f57fa7f78..d310570503 100644
 --- /usr/lib/python3/dist-packages/univention/uldap.py
 +++ /usr/lib/python3/dist-packages/univention/uldap.py
 @@ -82,7 +82,7 @@ def explodeDn(dn, notypes=0):
@@ -11,16 +11,7 @@ index 1f57fa7f78..099ff99546 100644
      # type: (int, List[str], bool) -> access
      """
      Open a LDAP connection to the local LDAP server with the LDAP root account.
-@@ -98,6 +98,8 @@ def getRootDnConnection(start_tls=2, decode_ignorelist=[], reconnect=True):
-     ucr.load()
-     port = int(ucr.get('slapd/port', '7389').split(',')[0])
-     host = ucr['hostname'] + '.' + ucr['domainname']
-+    if start_tls is None:
-+        start_tls = int(ucr.get('uldap/start-tls'))
-     if ucr.get('ldap/server/type', 'dummy') == 'master':
-         bindpw = open('/etc/ldap.secret').read().rstrip('\n')
-         binddn = 'cn=admin,{}'.format(ucr['ldap/base'])
-@@ -107,7 +109,7 @@ def getRootDnConnection(start_tls=2, decode_ignorelist=[], reconnect=True):
+@@ -107,7 +107,7 @@ def getRootDnConnection(start_tls=2, decode_ignorelist=[], reconnect=True):
      return access(host=host, port=port, base=ucr['ldap/base'], binddn=binddn, bindpw=bindpw, start_tls=start_tls, decode_ignorelist=decode_ignorelist, reconnect=reconnect)
  
  
@@ -29,12 +20,7 @@ index 1f57fa7f78..099ff99546 100644
      # type: (int, List[str], bool) -> access
      """
      Open a LDAP connection to the Primary Directory Node LDAP server using the admin credentials.
-@@ -123,10 +125,12 @@ def getAdminConnection(start_tls=2, decode_ignorelist=[], reconnect=True):
-     ucr.load()
-     bindpw = open('/etc/ldap.secret').read().rstrip('\n')
-     port = int(ucr.get('ldap/master/port', '7389'))
-+    if start_tls is None:
-+        start_tls = int(ucr.get('uldap/start-tls'))
+@@ -126,7 +126,7 @@ def getAdminConnection(start_tls=2, decode_ignorelist=[], reconnect=True):
      return access(host=ucr['ldap/master'], port=port, base=ucr['ldap/base'], binddn='cn=admin,' + ucr['ldap/base'], bindpw=bindpw, start_tls=start_tls, decode_ignorelist=decode_ignorelist, reconnect=reconnect)
  
  
@@ -43,16 +29,7 @@ index 1f57fa7f78..099ff99546 100644
      # type: (int, List[str], bool) -> access
      """
      Open a LDAP connection to a Backup Directory Node LDAP server using the admin credentials.
-@@ -142,6 +146,8 @@ def getBackupConnection(start_tls=2, decode_ignorelist=[], reconnect=True):
-     ucr.load()
-     bindpw = open('/etc/ldap-backup.secret').read().rstrip('\n')
-     port = int(ucr.get('ldap/master/port', '7389'))
-+    if start_tls is None:
-+        start_tls = int(ucr.get('uldap/start-tls'))
-     try:
-         return access(host=ucr['ldap/master'], port=port, base=ucr['ldap/base'], binddn='cn=backup,' + ucr['ldap/base'], bindpw=bindpw, start_tls=start_tls, decode_ignorelist=decode_ignorelist, reconnect=reconnect)
-     except ldap.SERVER_DOWN:
-@@ -151,7 +157,7 @@ def getBackupConnection(start_tls=2, decode_ignorelist=[], reconnect=True):
+@@ -151,7 +151,7 @@ def getBackupConnection(start_tls=2, decode_ignorelist=[], reconnect=True):
          return access(host=backup, port=port, base=ucr['ldap/base'], binddn='cn=backup,' + ucr['ldap/base'], bindpw=bindpw, start_tls=start_tls, decode_ignorelist=decode_ignorelist, reconnect=reconnect)
  
  
@@ -61,13 +38,23 @@ index 1f57fa7f78..099ff99546 100644
      # type: (int, List[str], bool, str, bool, bool) -> access
      """
      Open a LDAP connection using the machine credentials.
-@@ -170,6 +176,8 @@ def getMachineConnection(start_tls=2, decode_ignorelist=[], ldap_master=True, se
-     ucr.load()
+@@ -240,7 +240,7 @@ class access(object):
+     :param bool reconnect: Automatically re-establish connection to LDAP server if connection breaks.
+     """
  
-     bindpw = open(secret_file).read().rstrip('\n')
-+    if start_tls is None:
-+        start_tls = int(ucr.get('uldap/start-tls'))
+-    def __init__(self, host='localhost', port=None, base='', binddn='', bindpw='', start_tls=2, ca_certfile=None, decode_ignorelist=[], use_ldaps=False, uri=None, follow_referral=False, reconnect=True):
++    def __init__(self, host='localhost', port=None, base='', binddn='', bindpw='', start_tls=None, ca_certfile=None, decode_ignorelist=[], use_ldaps=False, uri=None, follow_referral=False, reconnect=True):
+         # type: (str, int, str, Optional[str], str, int, str, List, bool, str, bool, bool) -> None
+         self.host = host
+         self.base = base
+@@ -259,6 +259,9 @@ class access(object):
+         ucr = ConfigRegistry()
+         ucr.load()
  
-     if ldap_master:
-         # Connect to Primary Directory Node
++        if self.start_tls is None:
++            self.start_tls = int(ucr.get('uldap/start-tls', 2))
++
+         if not self.port:  # if no explicit port is given
+             self.port = int(ucr.get('ldap/server/port', 7389))  # take UCR value
+             if use_ldaps and self.port == 7389:  # adjust the standard port for ssl
 

@@ -47,18 +47,6 @@ BASE ${LDAP_BASE_DN}
 EOF
 chmod 0644 /etc/ldap/ldap.conf
 
-case "${TLS_REQCERT:-demand}" in
-  "never")
-    ucr set uldap/start-tls=0
-    ;;
-  "allow" | "try")
-    ucr set uldap/start-tls=1
-    ;;
-  *)
-    ucr set uldap/start-tls=2
-    ;;
-esac
-
 ucr set \
     server/role="memberserver" \
     ldap/master="${LDAP_HOST}" \
@@ -68,22 +56,19 @@ ucr set \
 
 case ${START_TLS} in
   never)
-    TLS_NO=0
+    ucr set uldap/start-tls=0
     export TLS_PARAM=""
     ;;
 
   request)
-    TLS_NO=1
+    ucr set uldap/start-tls=1
     export TLS_PARAM="-Z"
     ;;
 
   *)  # require
-    TLS_NO=2
+    ucr set uldap/start-tls=2
     export TLS_PARAM="-ZZ"
     ;;
 esac
-
-find /usr/local/lib/python3.7/dist-packages
-sed --in-place --expression="s/access[(]/access(start_tls=${TLS_NO}, /" /usr/local/lib/python3.7/dist-packages/univention/listener/handler.py
 
 exec "$@"
