@@ -5,7 +5,6 @@ services:
     extra_hosts:
       {{ ansible_fqdn }}: "{{ ansible_host }}"
     environment:
-      DOMAIN_NAME: "{{ ansible_domain }}"
       LDAP_HOST: "{{ ansible_fqdn }}"
       LDAP_BASE_DN: "{{ ldap_base.stdout }}"
       NOTIFIER_SERVER: "{{ ansible_fqdn }}"

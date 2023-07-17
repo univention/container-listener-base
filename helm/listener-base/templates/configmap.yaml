@@ -10,7 +10,6 @@ data:
   {{ with .Values.listenerBase }}
   CA_CERT_FILE: "{{ .caCertFile }}"
   DEBUG_LEVEL: "{{ .debugLevel }}"
-  DOMAIN_NAME: "{{ .domainName }}"
   ENVIRONMENT: "{{ .environment }}"
   LDAP_BASE_DN: "{{ .ldapBaseDn }}"
   LDAP_BIND_SECRET: "{{ .ldapBindSecret }}"

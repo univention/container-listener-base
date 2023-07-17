@@ -9,7 +9,6 @@ services:
     #   ucs-5746.univention.intranet: "10.200.115.20"
     environment:
       # TODO: Adjust those variables to your needs
-      DOMAIN_NAME: "univention-organization.intranet"
       LDAP_HOST: "${DOCKER_HOST_INTERNAL}"
       LDAP_BASE_DN: "dc=univention-organization,dc=intranet"
       NOTIFIER_SERVER: "${DOCKER_HOST_INTERNAL}"
