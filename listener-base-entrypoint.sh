@@ -47,12 +47,14 @@ BASE ${LDAP_BASE_DN}
 EOF
 chmod 0644 /etc/ldap/ldap.conf
 
-ucr set \
+# "listener/debug/level" is read by `univention/listener/handler_logging.py`
+/usr/sbin/ucr set \
     server/role="memberserver" \
     ldap/master="${LDAP_HOST}" \
     ldap/master/port="${LDAP_PORT}" \
     ldap/hostdn="${LDAP_HOST_DN}" \
-    ldap/base="${LDAP_BASE_DN}"
+    ldap/base="${LDAP_BASE_DN}" \
+    listener/debug/level="${DEBUG_LEVEL}"
 
 case ${START_TLS} in
   never)
