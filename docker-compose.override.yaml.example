@@ -12,7 +12,6 @@ services:
       LDAP_HOST: "${DOCKER_HOST_INTERNAL}"
       LDAP_BASE_DN: "dc=univention-organization,dc=intranet"
       NOTIFIER_SERVER: "${DOCKER_HOST_INTERNAL}"
-      START_TLS: "demand"
-      TLS_REQCERT: "demand"
+      TLS_MODE: "off"
 
 ...

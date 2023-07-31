@@ -20,7 +20,7 @@ services:
 
       DEBUG_LEVEL: "5"
       # Whether to start encryption and validate certificates.
-      # Chose from "plain", "unvalidated" and "secure".
+      # Chose from "off", "unvalidated" and "secure".
       TLS_MODE: "secure"
       LDAP_PASSWORD: "univention"
       LDAP_PASSWORD_FILE: "/var/secrets/ldap_secret"
