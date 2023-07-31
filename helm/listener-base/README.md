@@ -152,7 +152,7 @@ null
 			<td>listenerBase.debugLevel</td>
 			<td>string</td>
 			<td><pre lang="json">
-"5"
+"4"
 </pre>
 </td>
 			<td>Where to search for the CA Certificate file. caCertFile: "/var/secrets/ca_cert"</td>

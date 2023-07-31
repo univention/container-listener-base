@@ -8,7 +8,7 @@ listenerBase:
   caCert: "/var/secrets/ca_cert"
   # -- Where to search for the CA Certificate file.
   # caCertFile: "/var/secrets/ca_cert"
-  debugLevel: "5"
+  debugLevel: "4"
   ldapBaseDn: null
   # -- LDAP password for `cn=admin`. Will be written to "ldapPasswordFile" if set.
   ldapPassword: null

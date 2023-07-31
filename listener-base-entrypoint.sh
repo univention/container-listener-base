@@ -20,7 +20,7 @@ export NOTIFIER_SERVER="${NOTIFIER_SERVER:-}"
 CA_CERT="${CA_CERT:-}"
 CA_CERT_FILE="${CA_CERT_FILE:-/run/secrets/ca_cert}"
 TLS_MODE="${TLS_MODE:-secure}"
-export DEBUG_LEVEL="${DEBUG_LEVEL:-5}"
+export DEBUG_LEVEL="${DEBUG_LEVEL:-4}"
 export PYTHON_DIST_PACKAGES="${PYTHON_DIST_PACKAGES:-/usr/lib/python3/dist-packages}"
 
 # Test variables which should not be empty
