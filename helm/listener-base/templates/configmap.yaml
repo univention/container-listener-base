@@ -1,13 +1,9 @@
 ---
+{{ include "common.configMap" (dict "top" . "overrides" "listener-base.configMap") }}
 
-apiVersion: "v1"
-kind: "ConfigMap"
-metadata:
-  name: '{{ include "common.names.fullname" . }}'
-  labels:
-    {{- include "common.labels.standard" . | nindent 4 }}
+{{- define "listener-base.configMap" }}
+{{- with .top.Values.listenerBase }}
 data:
-  {{ with .Values.listenerBase }}
   CA_CERT: "{{ .caCert }}"
   CA_CERT_FILE: "{{ .caCertFile }}"
   DEBUG_LEVEL: "{{ .debugLevel }}"
@@ -20,6 +16,6 @@ data:
   LDAP_PORT: "{{ .ldapPort }}"
   NOTIFIER_SERVER: "{{ default .ldapHost .notifierServer }}"
   TLS_MODE: "{{ .tlsMode }}"
-  {{ end }}
-
+{{ end }}
+{{ end }}
 ...

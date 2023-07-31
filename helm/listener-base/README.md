@@ -19,7 +19,7 @@ events arrive.
 
 | Repository | Name | Version |
 |------------|------|---------|
-| oci://gitregistry.knut.univention.de/univention/customers/dataport/upx/common-helm/helm | common | ^0.1.0 |
+| oci://gitregistry.knut.univention.de/univention/customers/dataport/upx/common-helm/helm | common | ^0.2.0 |
 
 ## Values
 
@@ -95,6 +95,15 @@ false
 			<td></td>
 		</tr>
 		<tr>
+			<td>image.pullSecrets</td>
+			<td>list</td>
+			<td><pre lang="json">
+[]
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
 			<td>image.registry</td>
 			<td>string</td>
 			<td><pre lang="json">
@@ -131,22 +140,13 @@ null
 			<td></td>
 		</tr>
 		<tr>
-			<td>imagePullSecrets</td>
-			<td>list</td>
-			<td><pre lang="json">
-[]
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
 			<td>listenerBase.caCert</td>
 			<td>string</td>
 			<td><pre lang="json">
-null
+"/var/secrets/ca_cert"
 </pre>
 </td>
-			<td>CA root certificate. Optional; will be written to "caCertFile" if set.</td>
+			<td>CA root certificate, base64-encoded. Optional; will be written to "caCertFile" if set.</td>
 		</tr>
 		<tr>
 			<td>listenerBase.debugLevel</td>
@@ -215,7 +215,7 @@ null
 			<td>listenerBase.ldapPasswordFile</td>
 			<td>string</td>
 			<td><pre lang="json">
-null
+"/var/secrets/ldap_secret"
 </pre>
 </td>
 			<td>The path to the "ldapPasswordFile" docker secret or a plain file</td>

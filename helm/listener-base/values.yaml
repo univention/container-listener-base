@@ -4,8 +4,8 @@ replicaCount: 1
 
 listenerBase:
   environment: "production"
-  # -- CA root certificate. Optional; will be written to "caCertFile" if set.
-  caCert: null
+  # -- CA root certificate, base64-encoded. Optional; will be written to "caCertFile" if set.
+  caCert: "/var/secrets/ca_cert"
   # -- Where to search for the CA Certificate file.
   # caCertFile: "/var/secrets/ca_cert"
   debugLevel: "5"
@@ -13,7 +13,7 @@ listenerBase:
   # -- LDAP password for `cn=admin`. Will be written to "ldapPasswordFile" if set.
   ldapPassword: null
   # -- The path to the "ldapPasswordFile" docker secret or a plain file
-  ldapPasswordFile: null
+  ldapPasswordFile: "/var/secrets/ldap_secret"
   ldapHost: "ucs-machine"
   ldapHostDn: null
   # -- Will add a mapping from "ldapHost" to "ldapHostIp" into "/etc/hosts" if set
@@ -26,14 +26,14 @@ listenerBase:
   tlsMode: "secure"
 
 image:
+  pullPolicy: "Always"
+  pullSecrets: []
   registry: "gitregistry.knut.univention.de"
   repository: "univention/customers/dataport/upx/container-listener-base/listener-base-debug"
-  pullPolicy: "Always"
   tag: "latest"
   # -- Define image sha256 as an alternative to `tag`
   sha256: null
 
-imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
