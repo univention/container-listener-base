@@ -64,11 +64,19 @@ repos:
 #     - '--server'
 #     - 'https://git.knut.univention.de'
 
-- repo: "https://github.com/norwoodj/helm-docs"
-  rev: "v1.11.0"
+# "Helm chart linter"
+- repo: https://github.com/gruntwork-io/pre-commit
+  rev: v0.1.21
   hooks:
-    - id: "helm-docs"
-      args:
-        - "--chart-search-root=helm"
-        - "--template-files=README.md.gotmpl"
+    - id: helmlint
+
+# "Helm docs linter"
+- repo: https://github.com/norwoodj/helm-docs
+  rev: v1.11.0
+  hooks:
+  - id: helm-docs
+    args:
+      - "--chart-search-root=helm"
+      - "--template-files=README.md.gotmpl"
+
 ...

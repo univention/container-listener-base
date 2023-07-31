@@ -31,12 +31,30 @@ services:
     volumes:
       - "listener-data:/var/lib/univention-directory-listener/:rw"
 
+  # Environment of the pre-commit linter.
+  pre-commit:
+    profiles:
+      - test
+    image: gitregistry.knut.univention.de/univention/customers/dataport/upx/container-pre-commit/upx-pre-commit:latest
+    volumes:
+      - type: bind
+        source: .
+        target: /code
+      - type: volume
+        # pre-commit installs dependencies, having them cached speeds things up
+        # a lot.
+        source: pre-commit-cache
+        target: /cache
+
+
 secrets:
   ca_cert:
     file: "ssl/certs/CAcert.pem"
   ldap_secret:
     file: "secret/ldap.secret"
+
 volumes:
   listener-data:
+  pre-commit-cache:
 
 ...
