@@ -58,17 +58,6 @@ else
   exit 2
 fi
 
-if [[ -s "${CA_CERT_FILE}" ]]; then
-  echo "Using CA Certificate from file"
-elif [[ -n "${CA_CERT-}" ]]; then
-  echo "Using CA Certificate from env"
-  mkdir --parents "$(dirname "${CA_CERT_FILE}")"
-  echo -n "${CA_CERT}" > "${CA_CERT_FILE}"
-else
-  echo "No CA Certificate found in ${CA_CERT_FILE}."
-  echo "Either set \"CA_CERT\" or write a secret to \"CA_CERT_FILE\"!"
-fi
-
 case "${TLS_MODE}" in
   "off")
     TLS_START_NO=0
@@ -76,9 +65,9 @@ case "${TLS_MODE}" in
     TLS_REQCERT="never"
     ;;
   "unvalidated")
-    TLS_START_NO=2
-    export TLS_START_FLAGS=""
-    TLS_REQCERT="never"
+    TLS_START_NO=1
+    export TLS_START_FLAGS="-z"
+    TLS_REQCERT="allow"
     ;;
   *)  # secure
     TLS_START_NO=2
@@ -87,12 +76,18 @@ case "${TLS_MODE}" in
     ;;
 esac
 
-if [[ "${TLS_REQCERT}" != "never" ]]; then
-  if [[ ! -s "${CA_CERT_FILE}" ]]; then
-    echo "Certificate validation enabled but no CA certificate provided!"
+if [[ "${TLS_MODE}" != "off" ]]; then
+  if [[ -s "${CA_CERT_FILE}" ]]; then
+    echo "Using CA certificate from file"
+  elif [[ -n "${CA_CERT}" ]]; then
+    echo "Using CA certificate from env"
+    mkdir --parents "$(dirname "${CA_CERT_FILE}")"
+    echo -n "${CA_CERT}" | base64 --decode --output "${CA_CERT_FILE}"
+  else
+    echo "TLS enabled but no CA certificate provided!"
+    echo "Please set \$CA_CERT and/or \$CA_CERT_FILE!."
     exit 1
   fi
-  echo "Using provided CA certificate at ${CA_CERT_FILE}"
 
   CA_DIR="/etc/univention/ssl/ucsCA"
   mkdir --parents "${CA_DIR}"
