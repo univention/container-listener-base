@@ -19,7 +19,7 @@ include:
       - "jobs/package-and-publish-helm-charts.yaml"
 
 
-build-base-image:
+build-listener-base:
   stage: "build"
   extends: ".kaniko"
   needs: []
@@ -28,12 +28,28 @@ build-base-image:
     KANIKO_ARGS: "--target=final"
 
 
-build-debug-image:
+build-listener-base-debug:
   stage: "build"
   extends: ".kaniko"
   needs: []
   variables:
     CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/listener-base-debug"
     KANIKO_ARGS: "--target=debug"
+
+
+publish-image-listener-base:
+  needs:
+    - job: build-listener-base
+  extends: .push-image-souvap
+  variables:
+    SOUVAP_IMAGE_NAME: "listener-base"
+
+
+publish-image-listener-base-debug:
+  needs:
+    - job: build-listener-base-debug
+  extends: .push-image-souvap
+  variables:
+    SOUVAP_IMAGE_NAME: "listener-base-debug"
 
 ...
