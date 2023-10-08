@@ -1,28 +1,8 @@
-ARG DOCKER_PROXY
-ARG DEBIAN_BASE_IMAGE_TAG=buster-slim
-
-# TODO: Should become a base image
-# See also "minbase" and similar from "DIST/docker-services" on Gitlab
-FROM ${DOCKER_PROXY}debian:${DEBIAN_BASE_IMAGE_TAG} AS ucs-sources-base
-ARG APT_KEY_URL=https://updates.software-univention.de/univention-archive-key-ucs-5x.gpg
-
-SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
-
-# hadolint ignore=DL3008
-RUN apt-get update \
-    && apt-get --assume-yes --verbose-versions --no-install-recommends install \
-      ca-certificates \
-      curl \
-      gpg \
-      gpg-agent \
-      libterm-readline-gnu-perl \
-    && rm -fr /var/lib/apt/lists/* /var/cache/apt/archives/* \
-    && curl -fsSL ${APT_KEY_URL} | apt-key add -
-
-COPY sources.list /etc/apt/sources.list.d/15_ucs-online-version.list
-
+FROM gitregistry.knut.univention.de/univention/customers/dataport/upx/container-ucs-base/ucs-base-504:branch-jbornhold-spike-entrypoint-plugin-point@sha256:da3cbfb4b67214b8e6360f40990bb9c71646c4ffe2b9df9c809978e4a3163655 AS ucs-sources-base
 
 FROM ucs-sources-base as deb_builder
+
+SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
 
 COPY patches/allow_disabling_tls.patch \
      patches/separate_notifier_address.patch \
