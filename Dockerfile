@@ -1,4 +1,4 @@
-FROM gitregistry.knut.univention.de/univention/customers/dataport/upx/container-ucs-base/ucs-base-504:branch-jbornhold-spike-entrypoint-plugin-point@sha256:da3cbfb4b67214b8e6360f40990bb9c71646c4ffe2b9df9c809978e4a3163655 AS ucs-sources-base
+FROM gitregistry.knut.univention.de/univention/customers/dataport/upx/container-ucs-base/ucs-base-504:branch-jbornhold-spike-entrypoint-plugin-point@sha256:856157d354bb1205dcc88c81e64a839fdaa116977f3b103c1928ad53d293e60e AS ucs-sources-base
 
 FROM ucs-sources-base as deb_builder
 
