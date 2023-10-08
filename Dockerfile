@@ -61,9 +61,9 @@ RUN \
   rm /usr/lib/univention-directory-listener/system/*
 
 COPY ./command.sh /
-COPY ./listener-base-entrypoint.sh /
+COPY ./listener-base-entrypoint.sh /entrypoint.d/50-listener-base-entrypoint.sh
 
-ENTRYPOINT ["/listener-base-entrypoint.sh"]
+# ENTRYPOINT ["/listener-base-entrypoint.sh"]
 CMD ["/command.sh"]
 
 
