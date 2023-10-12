@@ -1,26 +1,9 @@
-ARG DOCKER_PROXY
-ARG DEBIAN_BASE_IMAGE_TAG=buster-slim
+ARG UCS_BASE_IMAGE_TAG=v0.7.2
+ARG UCS_BASE_IMAGE=gitregistry.knut.univention.de/univention/components/ucs-base-image/ucs-base-505
 
-# TODO: Should become a base image
-# See also "minbase" and similar from "DIST/docker-services" on Gitlab
-FROM ${DOCKER_PROXY}debian:${DEBIAN_BASE_IMAGE_TAG} AS ucs-sources-base
-ARG APT_KEY_URL=https://updates.software-univention.de/univention-archive-key-ucs-5x.gpg
+FROM ${UCS_BASE_IMAGE}:${UCS_BASE_IMAGE_TAG} AS ucs-sources-base
 
 SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
-
-# hadolint ignore=DL3008
-RUN apt-get update \
-    && apt-get --assume-yes --verbose-versions --no-install-recommends install \
-      ca-certificates \
-      curl \
-      gpg \
-      gpg-agent \
-      libterm-readline-gnu-perl \
-    && rm -fr /var/lib/apt/lists/* /var/cache/apt/archives/* \
-    && curl -fsSL ${APT_KEY_URL} | apt-key add -
-
-COPY sources.list /etc/apt/sources.list.d/15_ucs-online-version.list
-
 
 FROM ucs-sources-base as deb_builder
 
@@ -81,9 +64,8 @@ RUN \
   rm /usr/lib/univention-directory-listener/system/*
 
 COPY ./command.sh /
-COPY ./listener-base-entrypoint.sh /
+COPY ./listener-base-entrypoint.sh /entrypoint.d/50-listener-base-entrypoint.sh
 
-ENTRYPOINT ["/listener-base-entrypoint.sh"]
 CMD ["/command.sh"]
 
 
