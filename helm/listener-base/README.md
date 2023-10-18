@@ -149,13 +149,22 @@ null
 			<td>CA root certificate, base64-encoded. Optional; will be written to "caCertFile" if set.</td>
 		</tr>
 		<tr>
+			<td>listenerBase.caCertFile</td>
+			<td>string</td>
+			<td><pre lang="json">
+""
+</pre>
+</td>
+			<td>Where to search for the CA Certificate file. caCertFile: "/var/secrets/ca_cert"</td>
+		</tr>
+		<tr>
 			<td>listenerBase.debugLevel</td>
 			<td>string</td>
 			<td><pre lang="json">
 "4"
 </pre>
 </td>
-			<td>Where to search for the CA Certificate file. caCertFile: "/var/secrets/ca_cert"</td>
+			<td></td>
 		</tr>
 		<tr>
 			<td>listenerBase.environment</td>
