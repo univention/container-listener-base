@@ -135,5 +135,3 @@ chmod 0644 /etc/ldap/ldap.conf
 # Patch StartTLS mode neither controlled by arguments nor ucr nor env-vars
 sed --in-place --expression="s/access[(]/access(start_tls=${TLS_START_NO}, /" \
   "${PYTHON_DIST_PACKAGES}/univention/listener/handler.py"
-
-exec "$@"
