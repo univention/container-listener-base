@@ -1,66 +1,44 @@
 ---
-
 include:
   - project: "univention/customers/dataport/upx/common-ci"
-    ref: "v0.5.4"
+    ref: "v1.9.7"
     file:
-      - "defaults/souvap-workflow.yaml"
       - "defaults/stages.yaml"
-      - "templates/kaniko.yaml"
-      - "templates/semantic-release-env.yaml"
+      - "defaults/souvap-workflow.yaml"
       - "templates/souvap.yaml"
       - "jobs/lint-pre-commit.yaml"
       - "jobs/lint-commit-messages.yaml"
+      - "jobs/semantic-release-env.yaml"
+      - "jobs/container-build.yaml"
       - "jobs/package-and-publish-helm-charts.yaml"
 
-
-pre-semantic-release:
-  extends: ".pre-semantic-release"
-
-
-build-listener-base:
-  stage: "build"
-  extends: ".kaniko"
-  needs:
-    - job: "pre-semantic-release"
-      artifacts: true
-  variables:
-    CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/listener-base"
+.build-matrix: &build-matrix
+  - IMAGE_NAME: "listener-base"
     KANIKO_ARGS: "--target=final"
-    VERSION: "${RELEASE_VERSION}"
-
-
-build-listener-base-debug:
-  stage: "build"
-  extends: ".kaniko"
-  needs:
-    - job: "pre-semantic-release"
-      artifacts: true
-  variables:
-    CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/listener-base-debug"
+  - IMAGE_NAME: "listener-base-debug"
     KANIKO_ARGS: "--target=debug"
-    VERSION: "${RELEASE_VERSION}"
 
-
-package-helm-charts:
-  needs:
-    - job: "pre-semantic-release"
-      artifacts: true
-
-
-publish-image-listener-base:
-  needs:
-    - job: build-listener-base
-  extends: .push-image-souvap
+container-build:
+  parallel:
+    matrix: *build-matrix
   variables:
-    SOUVAP_IMAGE_NAME: "listener-base"
+    KANIKO_BUILD_CONTEXT: "${CI_PROJECT_DIR}"
+    DOCKERFILE_PATH: "docker/listener-base/Dockerfile"
 
+container-generate-sbom:
+  parallel:
+    matrix: *build-matrix
 
-publish-image-listener-base-debug:
-  needs:
-    - job: build-listener-base-debug
+container-sign:
+  parallel:
+    matrix: *build-matrix
+
+container-security-scan:
+  parallel:
+    matrix: *build-matrix
+
+publish-images:
   extends: .push-image-souvap
-  variables:
-    SOUVAP_IMAGE_NAME: "listener-base-debug"
-
+  parallel:
+    matrix: *build-matrix
 ...
