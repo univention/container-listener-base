@@ -43,15 +43,19 @@ class ListenerModuleTemplate(ListenerModuleHandler):
 
     def create(self, dn, new):
         self.logger.info('[ create ] dn: %r', dn)
+        self.logger.info(f'new: {new}')
 
     def modify(self, dn, old, new, old_dn):
         self.logger.info('[ modify ] dn: %r', dn)
         if old_dn:
             self.logger.debug('it is (also) a move! old_dn: %r', old_dn)
         self.logger.debug('changed attributes: %r', self.diff(old, new))
+        self.logger.info(f'new: {new}')
+        self.logger.info(f'old: {old}')
 
     def remove(self, dn, old):
         self.logger.info('[ remove ] dn: %r', dn)
+        self.logger.info(f'old: {old}')
 
     class Configuration(ListenerModuleHandler.Configuration):
         name = name
