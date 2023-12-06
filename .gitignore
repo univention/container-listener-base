@@ -6,3 +6,4 @@
 /secret/*.secret
 /ssl/certs/*.pem
 /venv/
+packages
