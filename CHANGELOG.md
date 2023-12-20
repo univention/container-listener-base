@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.6](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.4.5...v0.4.6) (2023-12-20)
+
+
+### Bug Fixes
+
+* **docker:** update ucs-base from 5.0-5 to 5.0-6 ([e2f955f](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/commit/e2f955fe70f7ddcb375dfec26091c600a27f06bf))
+
 ## [0.4.5](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.4.4...v0.4.5) (2023-12-19)
 
 
