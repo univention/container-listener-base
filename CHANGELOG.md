@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.7](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.4.6...v0.4.7) (2023-12-28)
+
+
+### Bug Fixes
+
+* **licensing/ci:** add spdx license headers, add license header checking pre-commit ([81ba796](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/commit/81ba796c60e1ed153c67d6a28f3ada8562bc1cb0))
+
 ## [0.4.6](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.4.5...v0.4.6) (2023-12-20)
 
 
