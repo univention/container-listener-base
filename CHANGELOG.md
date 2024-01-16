@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.4.7...v0.5.0) (2024-01-16)
+
+
+### Features
+
+* **ci:** add debian update check jobs for scheduled pipeline ([5b8bb46](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/commit/5b8bb4615ce50e04caf7512960703e3279b0a21d))
+
+
+### Bug Fixes
+
+* **deps:** add renovate.json ([2bcc26b](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/commit/2bcc26b6eb4d0f6a8004a82fbfe026f4f7353501))
+
 ## [0.4.7](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.4.6...v0.4.7) (2023-12-28)
 
 
