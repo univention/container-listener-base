@@ -44,18 +44,13 @@ RUN \
 COPY --from=deb_builder \
     /root/src/debian/univention-directory-listener_*.deb /root/
 
-COPY patches/make_uldap_start-tls_configurable.patch /root/
-
 # hadolint ignore=DL3008
 RUN \
   apt-get update && \
   apt-get --assume-yes --verbose-versions --no-install-recommends install \
     /root/univention-directory-listener_*.deb \
-    patch \
     python3-distutils \
     python3-univention-directory-manager && \
-  patch -p 0 -d / -i /root/make_uldap_start-tls_configurable.patch && \
-  apt-get purge --auto-remove --assume-yes patch && \
   rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/* && \
   awk \
     '/^Package: univention-directory-listener$/{ while(!/^Version: /){getline} print $2 }' \
