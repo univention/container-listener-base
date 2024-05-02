@@ -129,7 +129,7 @@ chmod 0644 /etc/ldap/ldap.conf
     ldap/master/port="${LDAP_PORT}" \
     ldap/hostdn="${LDAP_HOST_DN}" \
     ldap/base="${LDAP_BASE_DN}" \
-    uldap/start-tls="${TLS_START_NO}" \
+    directory/manager/starttls="${TLS_START_NO}" \
     listener/debug/level="${DEBUG_LEVEL}"
 
 # Patch StartTLS mode neither controlled by arguments nor ucr nor env-vars
