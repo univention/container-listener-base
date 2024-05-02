@@ -1,14 +1,17 @@
-Origin: https://git.knut.univention.de/univention/ucs/-/merge_requests/825
-Author: Thomas Kintscher <thomas.kintscher.extern@univention.de>
-Date:   Tue Jul 4 17:27:44 2023 +0200
+From f3b257f83171b23d17741f81c22b0d74863c9f91 Mon Sep 17 00:00:00 2001
+From: Johannes Bornhold <johannes.bornhold.extern@univention.de>
+Date: Thu, 2 May 2024 12:56:34 +0200
+Subject: [PATCH 2/2] allow disabling tls
 
-    feat(univention-directory-listener): add `-z` flag to disable StartTLS
+---
+ management/univention-directory-listener/src/main.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/management/univention-directory-listener/src/main.c b/management/univention-directory-listener/src/main.c
-index 79bc83a61c..d216e10bdb 100644
+index 1bd9c94e2d..3ab7221f1c 100644
 --- a/management/univention-directory-listener/src/main.c
 +++ b/management/univention-directory-listener/src/main.c
-@@ -227,6 +227,7 @@
+@@ -228,6 +228,7 @@ static void usage(void) {
  	fprintf(stderr, "   -y   read LDAP bind password from file\n");
  	fprintf(stderr, "   -x   LDAP simple bind\n");
  	fprintf(stderr, "   -Z   LDAP start TLS request (-ZZ to require successful response)\n");
@@ -16,7 +19,7 @@ index 79bc83a61c..d216e10bdb 100644
  	fprintf(stderr, "   -Y   SASL mechanism\n");
  	fprintf(stderr, "   -U   SASL username\n");
  	fprintf(stderr, "   -R   SASL realm\n");
-@@ -414,7 +415,7 @@
+@@ -414,7 +415,7 @@ int main(int argc, char *argv[]) {
  	for (;;) {
  		int c;
  
@@ -25,7 +28,7 @@ index 79bc83a61c..d216e10bdb 100644
  		if (c < 0)
  			break;
  		switch (c) {
-@@ -466,6 +467,9 @@
+@@ -466,6 +467,9 @@ int main(int argc, char *argv[]) {
  		case 'Z':
  			lp->start_tls++;
  			break;
@@ -35,3 +38,6 @@ index 79bc83a61c..d216e10bdb 100644
  		case 'x':
  			lp->authmethod = LDAP_AUTH_SIMPLE;
  			break;
+-- 
+2.44.0
+

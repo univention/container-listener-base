@@ -10,9 +10,7 @@ SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
 
 FROM ucs-sources-base as deb_builder
 
-COPY patches/allow_disabling_tls.patch \
-     patches/separate_notifier_address.patch \
-     /root/
+COPY patches/*.patch /root/
 
 WORKDIR /root/src/debian/
 
@@ -22,8 +20,8 @@ RUN \
   apt-get build-dep --assume-yes univention-directory-listener && \
   apt-get source univention-directory-listener && \
   cd univention-directory-listener-* && \
-  patch -p3 < /root/separate_notifier_address.patch && \
-  patch -p3 < /root/allow_disabling_tls.patch && \
+  patch -p3 < /root/0001-allow-to-specify-separate-notifier-address.patch && \
+  patch -p3 < /root/0002-allow-disabling-tls.patch && \
   dpkg-buildpackage -uc -us -b && \
   rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
