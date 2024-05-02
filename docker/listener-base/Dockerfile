@@ -16,14 +16,12 @@ WORKDIR /root/src/debian/
 
 # hadolint ignore=DL3003
 RUN \
-  apt-get update && \
   apt-get build-dep --assume-yes univention-directory-listener && \
   apt-get source univention-directory-listener && \
   cd univention-directory-listener-* && \
   patch -p3 < /root/0001-allow-to-specify-separate-notifier-address.patch && \
   patch -p3 < /root/0002-allow-disabling-tls.patch && \
-  dpkg-buildpackage -uc -us -b && \
-  rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+  dpkg-buildpackage -uc -us -b
 
 
 FROM ucs-sources-base as final
@@ -36,22 +34,18 @@ RUN \
     | debconf-set-selections && \
   echo "postfix postfix/mailname string univention-directory-listener" \
     | debconf-set-selections && \
-  apt-get update && \
   apt-get --assume-yes --verbose-versions --no-install-recommends install \
-    postfix && \
-  rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+    postfix
 
 COPY --from=deb_builder \
     /root/src/debian/univention-directory-listener_*.deb /root/
 
 # hadolint ignore=DL3008
 RUN \
-  apt-get update && \
   apt-get --assume-yes --verbose-versions --no-install-recommends install \
     /root/univention-directory-listener_*.deb \
     python3-distutils \
     python3-univention-directory-manager && \
-  rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/* && \
   awk \
     '/^Package: univention-directory-listener$/{ while(!/^Version: /){getline} print $2 }' \
     /var/lib/dpkg/status > /version
