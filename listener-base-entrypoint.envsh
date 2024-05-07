@@ -61,17 +61,14 @@ fi
 case "${TLS_MODE}" in
   "off")
     TLS_START_NO=0
-    export TLS_START_FLAGS="-zz"
     TLS_REQCERT="never"
     ;;
   "unvalidated")
     TLS_START_NO=1
-    export TLS_START_FLAGS="-z"
     TLS_REQCERT="allow"
     ;;
   *)  # secure
     TLS_START_NO=2
-    export TLS_START_FLAGS=""
     TLS_REQCERT="demand"
     ;;
 esac
