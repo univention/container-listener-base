@@ -98,6 +98,8 @@ if [[ "${TLS_MODE}" != "off" ]]; then
   mkdir --parents "${CA_CERT_DIR}"
   ln --symbolic --force "${CA_CERT_FILE}" "${CA_CERT_DIR}/ca_cert.crt"
   update-ca-certificates
+else
+  echo "TLS mode is disabled!"
 fi
 
 # Adjust listener's folders' ownership
