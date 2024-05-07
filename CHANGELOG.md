@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.7.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.6.0...v0.7.0) (2024-05-07)
+
+
+### Features
+
+* Log a message on startup also when TLS mode is disabled ([7fa9a74](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/commit/7fa9a74a2298ed43d6875fda67c54d0503c62e51))
+
+
+### Bug Fixes
+
+* Remove TLS_START_TLS_FLAGS ([86552fd](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/commit/86552fdb19ca9baa2c1cfdde9cfb512ade6204bc))
+
 ## [0.6.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.5.1...v0.6.0) (2024-05-02)
 
 
