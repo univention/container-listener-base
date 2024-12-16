@@ -4,22 +4,29 @@
 ---
 include:
   - project: "univention/customers/dataport/upx/common-ci"
-    ref: "v1.18.0"
+    ref: "v1.35.0"
     file:
       - "defaults/stages.yaml"
-      - "defaults/souvap-workflow.yaml"
+      - "defaults/nubus-workflow.yaml"
       - "jobs/lint-pre-commit.yaml"
       - "jobs/lint-commit-messages.yaml"
       - "jobs/semantic-release-env.yaml"
-      - "jobs/container-build-souvap.yaml"
-      - "jobs/package-and-publish-helm-charts-souvap.yaml"
+      - "jobs/container-build-external.yaml"
+      - "jobs/package-and-publish-helm-charts-external.yaml"
       - "jobs/check-debian-updates.yaml"
+
+variables:
+  SKIP_UPDATE_HELM_VALUES: "1"
 
 .build-matrix: &build-matrix
   - IMAGE_NAME: "listener-base"
     KANIKO_ARGS: "--target=final"
   - IMAGE_NAME: "listener-base-debug"
     KANIKO_ARGS: "--target=debug"
+
+.publish-matrix: &publish-matrix
+  - IMAGE_NAME:
+      - "listener-base"
 
 container-build:
   parallel:
@@ -28,29 +35,21 @@ container-build:
     KANIKO_BUILD_CONTEXT: "${CI_PROJECT_DIR}"
     DOCKERFILE_PATH: "docker/listener-base/Dockerfile"
 
-container-generate-sbom:
+container-malware-scan:
   parallel:
-    matrix: *build-matrix
+    matrix: *publish-matrix
 
-container-sign:
+push-image-external:
   parallel:
-    matrix: *build-matrix
+    matrix: *publish-matrix
 
-container-security-scan:
-  parallel:
-    matrix: *build-matrix
-
-push-image-souvap:
-  parallel:
-    matrix: *build-matrix
-
-container-sign-souvap:
+container-sign-external:
   parallel:
     matrix: *build-matrix
 
 check-debian-updates:
   parallel:
-    matrix: *build-matrix
+    matrix: *publish-matrix
   variables:
     TARGET_IMAGE: "${CI_REGISTRY_IMAGE}/${IMAGE_NAME}:latest"
 ...
