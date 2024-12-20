@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.8.0...v0.9.0) (2024-12-20)
+
+
+### Features
+
+* upgrade UCS base image to 2024-12-12 ([ec59f35](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/commit/ec59f35ec44955d8aaac545418a3bed31b877a2e))
+
 ## [0.8.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.7.0...v0.8.0) (2024-09-13)
 
 
