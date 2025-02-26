@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.9.0...v0.10.0) (2025-02-26)
+
+
+### Features
+
+* Bump ucs-base-image to use released apt sources ([e421a50](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/commit/e421a509fd39cf7ffa84b4cc1ce9bb4a18710122))
+
 ## [0.9.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.8.0...v0.9.0) (2024-12-20)
 
 
