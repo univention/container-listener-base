@@ -132,5 +132,6 @@ chmod 0644 /etc/ldap/ldap.conf
     listener/debug/level="${DEBUG_LEVEL}"
 
 # Patch StartTLS mode neither controlled by arguments nor ucr nor env-vars
-sed --in-place --expression="s/access[(]/access(start_tls=${TLS_START_NO}, /" \
+sed --in-place \
+  --expression="s/access(\*\*ldap_credentials)/access(start_tls=${TLS_START_NO}, \*\*ldap_credentials)/" \
   "${PYTHON_DIST_PACKAGES}/univention/listener/handler.py"
