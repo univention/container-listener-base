@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.1](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.10.0...v0.10.1) (2025-02-28)
+
+
+### Bug Fixes
+
+* make sed call in entrypoint idempotent (univention/customers/dataport/upx/container-listener-base[#3](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/issues/3)) ([e3ec0d9](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/commit/e3ec0d9795fbd5ca859528a5a0cf19a45d5e75f8))
+
 ## [0.10.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.9.0...v0.10.0) (2025-02-26)
 
 
