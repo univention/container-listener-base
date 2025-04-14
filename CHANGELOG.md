@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.2](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.10.1...v0.10.2) (2025-04-14)
+
+
+### Bug Fixes
+
+* upgrade common dependency to 0.12.2 ([0a34aa2](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/commit/0a34aa254a940d0007a1cfa2c3c3de8808bc6352))
+
 ## [0.10.1](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.10.0...v0.10.1) (2025-02-28)
 
 
