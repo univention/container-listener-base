@@ -109,6 +109,7 @@ then
 fi
 
 # Configure LDAP client
+mkdir -p /etc/ldap
 cat <<EOF > /etc/ldap/ldap.conf
 # This file should be world readable but not world writable.
 
