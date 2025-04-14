@@ -19,7 +19,7 @@ events arrive.
 
 | Repository | Name | Version |
 |------------|------|---------|
-| oci://gitregistry.knut.univention.de/univention/customers/dataport/upx/common-helm/helm | common | ^0.2.0 |
+| oci://artifacts.software-univention.de/nubus-dev/charts | common | ^0.12.0 |
 
 ## Values
 
