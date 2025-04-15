@@ -36,7 +36,7 @@ services:
   ldap-notifier:
     container_name: "listener-base-ldap-notifier"
     platform: "linux/amd64"
-    image: "gitregistry.knut.univention.de/univention/customers/dataport/upx/container-ldap/ldap-notifier:latest"
+    image: "gitregistry.knut.univention.de/univention/customers/dataport/upx/container-ldap/ldap-notifier:latest@sha256:19fa61c158006f662f77c52b738373cc30296adf2f1edf9a45d5f1e5a2d10e45"
     ports:
       - "6669:6669"
     volumes:
@@ -55,7 +55,7 @@ services:
   ldap-server:
     container_name: "listener-base-ldap-server"
     platform: "linux/amd64"
-    image: "gitregistry.knut.univention.de/univention/customers/dataport/upx/container-ldap/ldap-server:latest"
+    image: "gitregistry.knut.univention.de/univention/customers/dataport/upx/container-ldap/ldap-server:latest@sha256:911c19fd959943cbcdf08864bfc0f2ffcc3ce536e5b4ac1b621a716aa8f5a072"
     environment:
       DOMAIN_NAME: "univention-organization.intranet"
       LDAP_BASE_DN: "dc=univention-organization,dc=intranet"
@@ -75,7 +75,7 @@ services:
 
   ldap-admin:
     container_name: "listener-base-ldap-admin"
-    image: "osixia/phpldapadmin:0.9.0"
+    image: "osixia/phpldapadmin:0.9.0@sha256:d112b82be1336f91e028b0348755133fda333992355b533419355a65c32ff9ad"
     platform: "linux/amd64"
     environment:
       PHPLDAPADMIN_LDAP_HOSTS: "#PYTHON2BASH:[{'listener-base-ldap-server':{'login':{'bind_id':'cn=admin,dc=univention-organization,dc=intranet'}}}]"
@@ -98,7 +98,7 @@ services:
   pre-commit:
     profiles:
       - test
-    image: gitregistry.knut.univention.de/univention/customers/dataport/upx/container-pre-commit/upx-pre-commit:latest
+    image: gitregistry.knut.univention.de/univention/customers/dataport/upx/container-pre-commit/upx-pre-commit:latest@sha256:c928a775fdbbb6291311b307952e750f06b1931c65f516e999464fbf0e9a1970
     volumes:
       - type: bind
         source: .
