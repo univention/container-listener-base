@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.10.2...v0.11.0) (2025-04-28)
+
+
+### Features
+
+* Bump ucs-base-image version ([678591c](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/commit/678591c9b56b6b032496ec539f78fea7c601bc8b)), closes [univention/dev/internal/team-nubus#1155](https://git.knut.univention.de/univention/dev/internal/team-nubus/issues/1155)
+
 ## [0.10.2](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.10.1...v0.10.2) (2025-04-14)
 
 
