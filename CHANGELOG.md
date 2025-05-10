@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.11.1](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.11.0...v0.11.1) (2025-05-10)
+
+
+### Bug Fixes
+
+* move addlicense pre-commit hook ([47e082c](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/commit/47e082c8bbf0e3ece685ea82dc840880a6148984))
+* update common-ci to main ([3cf99fe](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/commit/3cf99feed547447b38781c9fc714a7e35958b46e))
+
 ## [0.11.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.10.2...v0.11.0) (2025-04-28)
 
 
