@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.11.1...v0.12.0) (2025-05-11)
+
+
+### Features
+
+* move and upgrade ucs-base-image to 0.17.3-build-2025-05-11 ([a0d5b64](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/commit/a0d5b64bf1f95879112dc821e6985c5623d2c713))
+
 ## [0.11.1](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.11.0...v0.11.1) (2025-05-10)
 
 
