@@ -35,6 +35,12 @@ repos:
     - id: "conventional-pre-commit"
       stages: ["commit-msg"]
 
+- repo: "https://git.knut.univention.de/univention/infrastructure/pre-commit-hooks/check-issue-reference"
+  rev: "v1.0.1"
+  hooks:
+    - id: "check-issue-reference"
+      name: "Check issue reference"
+
 # "Shell Syntax Check"
 # This is a wrapper for shellcheck as long as
 # shellcheck doesn't have it's own .pre-commit-hooks.yaml
