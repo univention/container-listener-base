@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # SPDX-FileCopyrightText: 2023-2025 Univention GmbH
 
-ARG UCS_BASE_IMAGE_TAG=0.17.3-build-2025-05-11
-ARG UCS_BASE_IMAGE=gitregistry.knut.univention.de/univention/dev/projects/ucs-base-image/ucs-base-521
+ARG UCS_BASE_IMAGE_TAG=0.18.2-build-2025-06-12
+ARG UCS_BASE_IMAGE=gitregistry.knut.univention.de/univention/dev/projects/ucs-base-image/ucs-base-522
 
 FROM ${UCS_BASE_IMAGE}:${UCS_BASE_IMAGE_TAG} AS ucs-sources-base
 
@@ -30,24 +30,24 @@ SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
 # hadolint ignore=DL3008
 RUN \
   echo "postfix postfix/main_mailer_type string 'Satellite system'" \
-    | debconf-set-selections && \
+  | debconf-set-selections && \
   echo "postfix postfix/mailname string univention-directory-listener" \
-    | debconf-set-selections && \
+  | debconf-set-selections && \
   apt-get --assume-yes --verbose-versions --no-install-recommends install \
-    postfix
+  postfix
 
 COPY --from=deb_builder \
-    /root/src/debian/univention-directory-listener_*.deb /root/
+  /root/src/debian/univention-directory-listener_*.deb /root/
 
 # hadolint ignore=DL3008
 RUN \
   apt-get --assume-yes --verbose-versions --no-install-recommends install \
-    /root/univention-directory-listener_*.deb \
-    python3-distutils \
-    python3-univention-directory-manager && \
+  /root/univention-directory-listener_*.deb \
+  python3-distutils \
+  python3-univention-directory-manager && \
   awk \
-    '/^Package: univention-directory-listener$/{ while(!/^Version: /){getline} print $2 }' \
-    /var/lib/dpkg/status > /version
+  '/^Package: univention-directory-listener$/{ while(!/^Version: /){getline} print $2 }' \
+  /var/lib/dpkg/status > /version
 
 RUN \
   rm /usr/lib/univention-directory-listener/system/*
