@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.1](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.12.0...v0.12.1) (2025-06-23)
+
+
+### Bug Fixes
+
+* bump umc-base-image version ([bd724f5](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/commit/bd724f5675b86df57b903bfd1bfa5b542e9bfa81)), closes [univention/dev/internal/team-nubus#1263](https://git.knut.univention.de/univention/dev/internal/team-nubus/issues/1263)
+
 ## [0.12.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-listener-base/compare/v0.11.1...v0.12.0) (2025-05-11)
 
 
