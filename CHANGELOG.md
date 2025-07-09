@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.2](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.12.1...v0.12.2) (2025-07-09)
+
+
+### Bug Fixes
+
+* make the helm chart entrpoint in the udm-listener redundant ([1834158](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/commit/1834158f5446517231c26acd0c6b68144d186f39)), closes [univention/dev/internal/dev-issues/dev-incidents#149](https://git.knut.univention.de/univention/dev/internal/dev-issues/dev-incidents/issues/149)
+
 ## [0.12.1](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.12.0...v0.12.1) (2025-06-23)
 
 
