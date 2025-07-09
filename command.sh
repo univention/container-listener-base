@@ -19,6 +19,6 @@ exec "/usr/sbin/univention-directory-listener" \
   -n "${NOTIFIER_SERVER}" \
   -m "/usr/lib/univention-directory-listener/system" \
   -c "/var/lib/univention-directory-listener" \
-  -y "${LDAP_PASSWORD_FILE}"
+  -y "${LDAP_PASSWORD_FILE}" -Z
 
 # [EOF]
