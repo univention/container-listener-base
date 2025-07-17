@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.0](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.12.2...v0.13.0) (2025-07-17)
+
+
+### Features
+
+* update ucs-base to 5.2.2-build.20250714 ([1aa906d](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/commit/1aa906d560139c6e1047ba0d956c892bd6a5e91f)), closes [univention/dev/internal/team-nubus#1320](https://git.knut.univention.de/univention/dev/internal/team-nubus/issues/1320)
+
 ## [0.12.2](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.12.1...v0.12.2) (2025-07-09)
 
 
