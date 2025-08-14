@@ -1,4 +1,4 @@
-From 3656c20a354c74526d1d8d8caab51c82a67002c4 Mon Sep 17 00:00:00 2001
+From f8ad7dfb605963cc18bff500bbda335050d0bd7a Mon Sep 17 00:00:00 2001
 From: Johannes Bornhold <johannes.bornhold.extern@univention.de>
 Date: Thu, 2 May 2024 12:46:21 +0200
 Subject: [PATCH 1/2] allow to specify separate notifier address
@@ -8,10 +8,10 @@ Subject: [PATCH 1/2] allow to specify separate notifier address
  1 file changed, 18 insertions(+), 4 deletions(-)
 
 diff --git a/management/univention-directory-listener/src/main.c b/management/univention-directory-listener/src/main.c
-index 1bdcd43442..1bd9c94e2d 100644
+index 2c279fc5ce..c58341c640 100644
 --- a/management/univention-directory-listener/src/main.c
 +++ b/management/univention-directory-listener/src/main.c
-@@ -218,6 +218,9 @@ static void usage(void) {
+@@ -191,6 +191,9 @@ static void usage(void) {
  	fprintf(stderr, "   -F   run in foreground (intended for process supervision)\n");
  	fprintf(stderr, "   -H   LDAP server URI\n");
  	fprintf(stderr, "   -h   LDAP server address\n");
@@ -21,7 +21,7 @@ index 1bdcd43442..1bd9c94e2d 100644
  	fprintf(stderr, "   -p   LDAP server port\n");
  	fprintf(stderr, "   -b   LDAP base dn\n");
  	fprintf(stderr, "   -D   LDAP bind dn\n");
-@@ -314,7 +317,7 @@ static void prepare_cache(const char *cache_dir) {
+@@ -287,7 +290,7 @@ static void prepare_cache(const char *cache_dir) {
  /* Open LDAP and Notifier connection.
   * @return 0 on success, 1 on error.
   */
@@ -30,7 +30,7 @@ index 1bdcd43442..1bd9c94e2d 100644
  	LDAPMessage *res;
  	int rc;
  	char **_attrs = NULL;
-@@ -330,7 +333,9 @@ static int do_connection(univention_ldap_parameters_t *lp) {
+@@ -303,7 +306,9 @@ static int do_connection(univention_ldap_parameters_t *lp) {
  		univention_debug(UV_DEBUG_LISTENER, UV_DEBUG_WARN, "can not connect to LDAP server %s:%d", lp->uri ? lp->uri : lp->host ? lp->host : "NULL", lp->port);
  		goto fail;
  	}
@@ -41,7 +41,7 @@ index 1bdcd43442..1bd9c94e2d 100644
  		goto fail;
  
  	/* check if we are connected to an OpenLDAP */
-@@ -358,6 +363,7 @@ fail:
+@@ -331,6 +336,7 @@ fail:
  int main(int argc, char *argv[]) {
  	univention_ldap_parameters_t *lp;
  	univention_ldap_parameters_t *lp_local;
@@ -49,7 +49,7 @@ index 1bdcd43442..1bd9c94e2d 100644
  	char *server_role;
  	int debugging = 0;
  	bool from_scratch = false;
-@@ -408,7 +414,7 @@ int main(int argc, char *argv[]) {
+@@ -381,7 +387,7 @@ int main(int argc, char *argv[]) {
  	for (;;) {
  		int c;
  
@@ -58,7 +58,7 @@ index 1bdcd43442..1bd9c94e2d 100644
  		if (c < 0)
  			break;
  		switch (c) {
-@@ -424,6 +430,9 @@ int main(int argc, char *argv[]) {
+@@ -397,6 +403,9 @@ int main(int argc, char *argv[]) {
  		case 'h':
  			lp->host = strdup(optarg);
  			break;
@@ -68,7 +68,7 @@ index 1bdcd43442..1bd9c94e2d 100644
  		case 'p':
  			lp->port = atoi(optarg);
  			break;
-@@ -528,7 +537,11 @@ int main(int argc, char *argv[]) {
+@@ -501,7 +510,11 @@ int main(int argc, char *argv[]) {
  		select_server(lp);
  	}
  
@@ -81,7 +81,7 @@ index 1bdcd43442..1bd9c94e2d 100644
  			if (initialize_only) {
  				univention_debug(UV_DEBUG_LISTENER, UV_DEBUG_ERROR, "can not connect any server, exit");
  				exit(1);
-@@ -625,6 +638,7 @@ int main(int argc, char *argv[]) {
+@@ -598,6 +611,7 @@ int main(int argc, char *argv[]) {
  
  	univention_ldap_close(lp);
  	univention_ldap_close(lp_local);
@@ -90,5 +90,5 @@ index 1bdcd43442..1bd9c94e2d 100644
  	exit_handler(0);
  }
 -- 
-2.44.0
+2.50.1
 
