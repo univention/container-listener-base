@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.3](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.13.2...v0.13.3) (2025-08-22)
+
+
+### Bug Fixes
+
+* add patch to fix listener initialization ([ebe56a8](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/commit/ebe56a85ebc915e220634bd8eb94190a35650f57)), closes [univention/dev/internal/team-nubus#1372](https://git.knut.univention.de/univention/dev/internal/team-nubus/issues/1372)
+
 ## [0.13.2](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.13.1...v0.13.2) (2025-08-19)
 
 
