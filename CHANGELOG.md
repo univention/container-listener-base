@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.4](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.13.3...v0.13.4) (2025-08-27)
+
+
+### Bug Fixes
+
+* **deps:** Update gitregistry.knut.univention.de/univention/dev/projects/ucs-base-image/ucs-base Docker tag to v5.2.2-build.20250821 ([8361d1c](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/commit/8361d1cf01f9a97c217f9ea7be6805bc46b9dc7a)), closes [#0](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/issues/0)
+
 ## [0.13.3](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.13.2...v0.13.3) (2025-08-22)
 
 
