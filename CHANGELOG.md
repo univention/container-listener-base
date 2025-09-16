@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.10](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.13.9...v0.13.10) (2025-09-16)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency univention/dev/nubus-for-k8s/common-ci to v1.44.7 ([156584c](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/commit/156584c544d8929d51f029d04810f2bbebeab0e5)), closes [#0](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/issues/0)
+
 ## [0.13.9](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.13.8...v0.13.9) (2025-09-12)
 
 
