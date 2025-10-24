@@ -1,14 +1,14 @@
-From f8ad7dfb605963cc18bff500bbda335050d0bd7a Mon Sep 17 00:00:00 2001
+From 8e6c9467d5e3145b464d1ffd03a4c3d2bccc1cbf Mon Sep 17 00:00:00 2001
 From: Johannes Bornhold <johannes.bornhold.extern@univention.de>
 Date: Thu, 2 May 2024 12:46:21 +0200
-Subject: [PATCH 1/2] allow to specify separate notifier address
+Subject: [PATCH] allow to specify separate notifier address
 
 ---
  .../univention-directory-listener/src/main.c  | 22 +++++++++++++++----
  1 file changed, 18 insertions(+), 4 deletions(-)
 
 diff --git a/management/univention-directory-listener/src/main.c b/management/univention-directory-listener/src/main.c
-index 2c279fc5ce..c58341c640 100644
+index cf4c90ca02b..abfc6236496 100644
 --- a/management/univention-directory-listener/src/main.c
 +++ b/management/univention-directory-listener/src/main.c
 @@ -191,6 +191,9 @@ static void usage(void) {
@@ -49,7 +49,7 @@ index 2c279fc5ce..c58341c640 100644
  	char *server_role;
  	int debugging = 0;
  	bool from_scratch = false;
-@@ -381,7 +387,7 @@ int main(int argc, char *argv[]) {
+@@ -382,7 +388,7 @@ int main(int argc, char *argv[]) {
  	for (;;) {
  		int c;
  
@@ -58,7 +58,7 @@ index 2c279fc5ce..c58341c640 100644
  		if (c < 0)
  			break;
  		switch (c) {
-@@ -397,6 +403,9 @@ int main(int argc, char *argv[]) {
+@@ -398,6 +404,9 @@ int main(int argc, char *argv[]) {
  		case 'h':
  			lp->host = strdup(optarg);
  			break;
@@ -68,7 +68,7 @@ index 2c279fc5ce..c58341c640 100644
  		case 'p':
  			lp->port = atoi(optarg);
  			break;
-@@ -501,7 +510,11 @@ int main(int argc, char *argv[]) {
+@@ -502,7 +511,11 @@ int main(int argc, char *argv[]) {
  		select_server(lp);
  	}
  
@@ -81,7 +81,7 @@ index 2c279fc5ce..c58341c640 100644
  			if (initialize_only) {
  				univention_debug(UV_DEBUG_LISTENER, UV_DEBUG_ERROR, "can not connect any server, exit");
  				exit(1);
-@@ -598,6 +611,7 @@ int main(int argc, char *argv[]) {
+@@ -599,6 +612,7 @@ int main(int argc, char *argv[]) {
  
  	univention_ldap_close(lp);
  	univention_ldap_close(lp_local);
@@ -90,5 +90,5 @@ index 2c279fc5ce..c58341c640 100644
  	exit_handler(0);
  }
 -- 
-2.50.1
+2.44.0
 

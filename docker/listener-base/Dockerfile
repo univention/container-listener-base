@@ -20,7 +20,6 @@ RUN \
   apt-get source univention-directory-listener && \
   cd univention-directory-listener-* && \
   patch -p3 < /root/0001-allow-to-specify-separate-notifier-address.patch && \
-  patch -p3 < /root/0002-fix-udl-fix-module-initialization.patch && \
   dpkg-buildpackage -uc -us -b
 
 
