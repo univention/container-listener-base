@@ -8,7 +8,7 @@ FROM ${UCS_BASE_IMAGE}:${UCS_BASE_IMAGE_TAG} AS ucs-sources-base
 
 SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
 
-FROM ucs-sources-base as deb_builder
+FROM ucs-sources-base AS deb_builder
 
 COPY patches/*.patch /root/
 
@@ -23,7 +23,7 @@ RUN \
   dpkg-buildpackage -uc -us -b
 
 
-FROM ucs-sources-base as final
+FROM ucs-sources-base AS final
 
 SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
 
@@ -58,6 +58,6 @@ COPY ./listener-base-entrypoint.envsh /entrypoint.d/50-listener-base-entrypoint.
 CMD ["/command.sh"]
 
 
-FROM final as debug
+FROM final AS debug
 
 COPY ./listener_handler.py /usr/lib/univention-directory-listener/system/
