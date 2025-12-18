@@ -2,23 +2,27 @@
 # SPDX-FileCopyrightText: 2023-2025 Univention GmbH
 
 ---
-{{ include "common.configMap" (dict "top" . "overrides" "listener-base.configMap") }}
-
-{{- define "listener-base.configMap" }}
-{{- with .top.Values.listenerBase }}
+kind: "ConfigMap"
+apiVersion: "v1"
+metadata:
+  name: {{ include "common.names.fullname" . | quote }}
+  labels:
+    {{- include "common.labels.standard" ( dict "customLabels" .Values.additionalLabels "context" . ) | nindent 4 }}
+  {{- include "nubus-common.annotations.render" ( dict
+    "values" ( list .Values.additionalAnnotations )
+    "context" . )
+    | nindent 2 }}
 data:
-  CA_CERT: "{{ .caCert }}"
-  CA_CERT_FILE: "{{ .caCertFile }}"
-  DEBUG_LEVEL: "{{ .debugLevel }}"
-  ENVIRONMENT: "{{ .environment }}"
-  LDAP_BASE_DN: "{{ .ldapBaseDn }}"
-  LDAP_PASSWORD: "{{ .ldapPassword }}"
-  LDAP_PASSWORD_FILE: "{{ .ldapPasswordFile }}"
-  LDAP_HOST: "{{ .ldapHost }}"
-  LDAP_HOST_DN: "{{ .ldapHostDn }}"
-  LDAP_PORT: "{{ .ldapPort }}"
-  NOTIFIER_SERVER: "{{ default .ldapHost .notifierServer }}"
-  TLS_MODE: "{{ .tlsMode }}"
-{{ end }}
-{{ end }}
+  CA_CERT: {{ .Values.listenerBase.caCert | quote }}
+  CA_CERT_FILE: {{ .Values.listenerBase.caCertFile | quote }}
+  DEBUG_LEVEL: {{ .Values.listenerBase.debugLevel | quote }}
+  ENVIRONMENT: {{ .Values.listenerBase.environment | quote }}
+  LDAP_BASE_DN: {{ .Values.listenerBase.ldapBaseDn | quote }}
+  LDAP_PASSWORD: {{ .Values.listenerBase.ldapPassword | quote }}
+  LDAP_PASSWORD_FILE: {{ .Values.listenerBase.ldapPasswordFile | quote }}
+  LDAP_HOST: {{ .Values.listenerBase.ldapHost | quote }}
+  LDAP_HOST_DN: {{ .Values.listenerBase.ldapHostDn | quote }}
+  LDAP_PORT: {{ .Values.listenerBase.ldapPort | quote }}
+  NOTIFIER_SERVER: {{ default .Values.listenerBase.ldapHost .Values.listenerBase.notifierServer | quote }}
+  TLS_MODE: {{ .Values.listenerBase.tlsMode | quote }}
 ...

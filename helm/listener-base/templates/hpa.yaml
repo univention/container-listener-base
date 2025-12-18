@@ -9,7 +9,11 @@ kind: "HorizontalPodAutoscaler"
 metadata:
   name: {{ include "common.names.fullname" . }}
   labels:
-    {{- include "common.labels.standard" . | nindent 4 }}
+    {{- include "common.labels.standard" ( dict "customLabels" .Values.additionalLabels "context" . ) | nindent 4 }}
+  {{- include "nubus-common.annotations.render" ( dict
+    "values" ( list .Values.additionalAnnotations )
+    "context" . )
+    | nindent 2 }}
 spec:
   scaleTargetRef:
     apiVersion: "apps/v1"

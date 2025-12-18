@@ -8,7 +8,11 @@ kind: "StatefulSet"
 metadata:
   name: '{{ include "common.names.fullname" . }}'
   labels:
-    {{- include "common.labels.standard" . | nindent 4 }}
+    {{- include "common.labels.standard" ( dict "customLabels" .Values.additionalLabels "context" . ) | nindent 4 }}
+  {{- include "nubus-common.annotations.render" ( dict
+    "values" ( list .Values.additionalAnnotations )
+    "context" . )
+    | nindent 2 }}
 spec:
   serviceName: {{ include "common.names.fullname" . }}
   {{- if not .Values.autoscaling.enabled }}
@@ -26,7 +30,11 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
+<<<<<<< HEAD
         {{- include "common.labels.matchLabels" . | nindent 8 }}
+=======
+        {{- include "common.labels.standard" ( dict "customLabels" .Values.additionalLabels "context" . ) | nindent 8 }}
+>>>>>>> bf7d111 (fixup! test(helm): Add helm unit tests for common behavior validation)
     spec:
       # TODO: Remove `Values.imagePullSecrets` once it has been replaced by `image.pullSecrets` everywhere.
       {{- with (coalesce .Values.image.pullSecrets .Values.imagePullSecrets ) }}
