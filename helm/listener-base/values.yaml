@@ -3,7 +3,43 @@
 
 ---
 
-replicaCount: 1
+# The global properties are used to configure multiple charts at once.
+global:
+  # -- Container registry address.
+  imageRegistry: "gitregistry.knut.univention.de"
+  # -- Define an ImagePullPolicy.
+  imagePullPolicy: ""
+  # -- Credentials to fetch images from private registry.
+  imagePullSecrets: []
+
+# -- Additional custom annotations to add to all deployed objects.
+additionalAnnotations: {}
+
+# -- Additional custom labels to add to all deployed objects.
+additionalLabels: {}
+
+# -- Array with extra environment variables to add to containers.
+#
+# extraEnvVars:
+#   - name: FOO
+#     value: "bar"
+extraEnvVars: []
+
+# -- Provide a name to substitute for the full names of resources.
+fullnameOverride: ""
+
+# Container image section.
+image:
+  pullPolicy: ""
+  pullSecrets: []
+  registry: ""
+  repository: "univention/customers/dataport/upx/container-listener-base/listener-base-debug"
+  tag: "latest"
+  # -- Define image sha256 as an alternative to `tag`
+  sha256: null
+
+# -- Credentials to fetch images from private registry.
+imagePullSecrets: []
 
 listenerBase:
   environment: "production"
@@ -29,17 +65,25 @@ listenerBase:
   # Chose from "off", "unvalidated" and "secure".
   tlsMode: "secure"
 
-image:
-  pullPolicy: "Always"
-  pullSecrets: []
-  registry: "gitregistry.knut.univention.de"
-  repository: "univention/customers/dataport/upx/container-listener-base/listener-base-debug"
-  tag: "latest"
-  # -- Define image sha256 as an alternative to `tag`
-  sha256: null
-
+# -- Provide a name in place of the chart name for `app:` labels.
 nameOverride: ""
-fullnameOverride: ""
+
+# -- Annotations to add to the pod.
+podAnnotations: {}
+
+# -- Security context for the pod.
+podSecurityContext: {}
+
+replicaCount: 1
+
+autoscaling:
+  enabled: false
+
+# -- Resource limits and requests for the container.
+resources: {}
+
+# -- Security context for the container.
+securityContext: {}
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -49,38 +93,6 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
-
-podAnnotations: {}
-
-podSecurityContext: {}
-  # fsGroup: 2000
-
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - "ALL"
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: "100m"
-  #   memory: "128Mi"
-  # requests:
-  #   cpu: "100m"
-  #   memory: "128Mi"
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
 

@@ -7,3 +7,4 @@
 /ssl/certs/*.pem
 /venv/
 packages
+**/__pycache__/

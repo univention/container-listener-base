@@ -5,7 +5,17 @@
 {{ include "common.configMap" (dict "top" . "overrides" "listener-base.configMap") }}
 
 {{- define "listener-base.configMap" }}
+{{- $top := .top }}
 {{- with .top.Values.listenerBase }}
+metadata:
+  labels:
+    {{- include "listener-base.labels" $top | nindent 4 }}
+  {{- with $top.Values.additionalAnnotations }}
+  annotations:
+    {{- range $key, $value := . }}
+    {{ $key }}: {{ tpl ($value | toString) $top | quote }}
+    {{- end }}
+  {{- end }}
 data:
   CA_CERT: "{{ .caCert }}"
   CA_CERT_FILE: "{{ .caCertFile }}"
