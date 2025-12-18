@@ -58,6 +58,14 @@ check-debian-updates:
   variables:
     TARGET_IMAGE: "${CI_REGISTRY_IMAGE}/${IMAGE_NAME}:latest"
 
+chart-tests:
+  image: "gitregistry.knut.univention.de/univention/dev/nubus-for-k8s/common-helm/testrunner:0.29.0"
+  stage: "test"
+  needs: []
+  script:
+    - "helm dep build helm/listener-base"
+    - "pytest -vv helm-unittests"
+
 sonarqube:
   extends: .sonarqube
   needs: []
