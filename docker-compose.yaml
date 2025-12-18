@@ -93,6 +93,16 @@ services:
       retries: 10
       start_period: "5s"
 
+  test-helm:
+    image: "gitregistry.knut.univention.de/univention/dev/nubus-for-k8s/common-helm/testrunner:0.29.0"
+    pull_policy: "if_not_present"
+    command: "pytest tests/"
+    profiles:
+      - "test"
+    volumes:
+      - "./helm/:/app/helm/"
+      - "./helm-unittests/:/app/tests"
+
   # Environment of the pre-commit linter.
   pre-commit:
     profiles:

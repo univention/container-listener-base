@@ -26,20 +26,24 @@ spec:
       annotations:
         checksum/config: '{{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}'
         checksum/secret: '{{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}'
+        {{- with .Values.additionalAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
         {{- with .Values.podAnnotations }}
-          {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-<<<<<<< HEAD
-        {{- include "common.labels.matchLabels" . | nindent 8 }}
-=======
         {{- include "common.labels.standard" ( dict "customLabels" .Values.additionalLabels "context" . ) | nindent 8 }}
->>>>>>> bf7d111 (fixup! test(helm): Add helm unit tests for common behavior validation)
     spec:
       # TODO: Remove `Values.imagePullSecrets` once it has been replaced by `image.pullSecrets` everywhere.
-      {{- with (coalesce .Values.image.pullSecrets .Values.imagePullSecrets ) }}
+      {{- if or .Values.imagePullSecrets .Values.global.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+        {{- range .Values.global.imagePullSecrets }}
+        - name: {{ . | quote }}
+        {{- end }}
+        {{- range .Values.imagePullSecrets }}
+        - name: {{ . | quote }}
+        {{- end }}
       {{- end }}
       serviceAccountName: '{{ include "common.names.fullname" . }}'
       securityContext:
@@ -54,11 +58,17 @@ spec:
         - name: '{{ .Chart.Name }}'
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: '{{ if .Values.image.registry }}{{ .Values.image.registry }}/{{ end }}{{ .Values.image.repository }}{{ if .Values.image.sha256 }}@sha256:{{ .Values.image.sha256 }}{{ else }}:{{ .Values.image.tag }}{{ end }}'
-          imagePullPolicy: '{{ .Values.image.pullPolicy }}'
+          image: '{{ coalesce .Values.image.registry .Values.global.imageRegistry }}/{{ .Values.image.repository }}{{ if .Values.image.sha256 }}@sha256:{{ .Values.image.sha256 }}{{ else }}:{{ .Values.image.tag }}{{ end }}'
+          {{- if or .Values.image.pullPolicy .Values.global.imagePullPolicy }}
+          imagePullPolicy: {{ coalesce .Values.image.pullPolicy .Values.global.imagePullPolicy | quote }}
+          {{- end }}
           envFrom:
             - configMapRef:
                 name: '{{ include "common.names.fullname" . }}'
+          {{- with .Values.extraEnvVars }}
+          env:
+            {{- . | toYaml | nindent 12 }}
+          {{- end }}
           ports:
             - name: "http"
               containerPort: 80

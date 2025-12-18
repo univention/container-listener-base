@@ -32,6 +32,24 @@ events arrive.
 	</thead>
 	<tbody>
 		<tr>
+			<td>additionalAnnotations</td>
+			<td>object</td>
+			<td><pre lang="json">
+{}
+</pre>
+</td>
+			<td>Additional custom annotations to add to all deployed objects.</td>
+		</tr>
+		<tr>
+			<td>additionalLabels</td>
+			<td>object</td>
+			<td><pre lang="json">
+{}
+</pre>
+</td>
+			<td>Additional custom labels to add to all deployed objects.</td>
+		</tr>
+		<tr>
 			<td>affinity</td>
 			<td>object</td>
 			<td><pre lang="json">
@@ -50,31 +68,13 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>autoscaling.maxReplicas</td>
-			<td>int</td>
+			<td>extraEnvVars</td>
+			<td>list</td>
 			<td><pre lang="json">
-100
+[]
 </pre>
 </td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>autoscaling.minReplicas</td>
-			<td>int</td>
-			<td><pre lang="json">
-1
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>autoscaling.targetCPUUtilizationPercentage</td>
-			<td>int</td>
-			<td><pre lang="json">
-80
-</pre>
-</td>
-			<td></td>
+			<td>Array with extra environment variables to add to containers.  extraEnvVars:   - name: FOO     value: "bar"</td>
 		</tr>
 		<tr>
 			<td>fullnameOverride</td>
@@ -83,13 +83,40 @@ false
 ""
 </pre>
 </td>
-			<td></td>
+			<td>Provide a name to substitute for the full names of resources.</td>
+		</tr>
+		<tr>
+			<td>global.imagePullPolicy</td>
+			<td>string</td>
+			<td><pre lang="json">
+""
+</pre>
+</td>
+			<td>Define an ImagePullPolicy.</td>
+		</tr>
+		<tr>
+			<td>global.imagePullSecrets</td>
+			<td>list</td>
+			<td><pre lang="json">
+[]
+</pre>
+</td>
+			<td>Credentials to fetch images from private registry.</td>
+		</tr>
+		<tr>
+			<td>global.imageRegistry</td>
+			<td>string</td>
+			<td><pre lang="json">
+"gitregistry.knut.univention.de"
+</pre>
+</td>
+			<td>Container registry address.</td>
 		</tr>
 		<tr>
 			<td>image.pullPolicy</td>
 			<td>string</td>
 			<td><pre lang="json">
-"Always"
+""
 </pre>
 </td>
 			<td></td>
@@ -107,7 +134,7 @@ false
 			<td>image.registry</td>
 			<td>string</td>
 			<td><pre lang="json">
-"gitregistry.knut.univention.de"
+""
 </pre>
 </td>
 			<td></td>
@@ -138,6 +165,15 @@ null
 </pre>
 </td>
 			<td></td>
+		</tr>
+		<tr>
+			<td>imagePullSecrets</td>
+			<td>list</td>
+			<td><pre lang="json">
+[]
+</pre>
+</td>
+			<td>Credentials to fetch images from private registry.</td>
 		</tr>
 		<tr>
 			<td>listenerBase.caCert</td>
@@ -263,7 +299,7 @@ null
 ""
 </pre>
 </td>
-			<td></td>
+			<td>Provide a name in place of the chart name for `app:` labels.</td>
 		</tr>
 		<tr>
 			<td>nodeSelector</td>
@@ -281,7 +317,7 @@ null
 {}
 </pre>
 </td>
-			<td></td>
+			<td>Annotations to add to the pod.</td>
 		</tr>
 		<tr>
 			<td>podSecurityContext</td>
@@ -290,7 +326,7 @@ null
 {}
 </pre>
 </td>
-			<td></td>
+			<td>Security context for the pod.</td>
 		</tr>
 		<tr>
 			<td>replicaCount</td>
@@ -308,7 +344,7 @@ null
 {}
 </pre>
 </td>
-			<td></td>
+			<td>Resource limits and requests for the container.</td>
 		</tr>
 		<tr>
 			<td>securityContext</td>
@@ -317,7 +353,7 @@ null
 {}
 </pre>
 </td>
-			<td></td>
+			<td>Security context for the container.</td>
 		</tr>
 		<tr>
 			<td>serviceAccount.annotations</td>
