@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.0](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.13.31...v0.14.0) (2026-01-02)
+
+
+### Features
+
+* **helm:** Add component-specific extraEnvVars support ([563fd8d](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/commit/563fd8d3b03c16883caa5cefe9c48ed681a429c8)), closes [univention/dev/internal/team-nubus#977](https://git.knut.univention.de/univention/dev/internal/team-nubus/issues/977)
+
 ## [0.13.31](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.13.30...v0.13.31) (2025-12-23)
 
 
