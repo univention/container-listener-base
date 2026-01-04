@@ -59,7 +59,7 @@ check-debian-updates:
     TARGET_IMAGE: "${CI_REGISTRY_IMAGE}/${IMAGE_NAME}:latest"
 
 chart-tests:
-  image: "gitregistry.knut.univention.de/univention/dev/nubus-for-k8s/common-helm/testrunner:0.29.0"
+  image: "gitregistry.knut.univention.de/univention/dev/nubus-for-k8s/common-helm/testrunner:0.29.4@sha256:a2be4eb72a7b411b2101a31b3f9f64fc2da2d394b688276ce445fdb434757030"
   stage: "test"
   needs: []
   script:
