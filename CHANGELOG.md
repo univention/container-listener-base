@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.1](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.14.0...v0.14.1) (2026-01-13)
+
+
+### Bug Fixes
+
+* Bump image to errata 299 ([ebe85ee](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/commit/ebe85eeb51452e36985cca4d37b54201f512e273)), closes [univention/dev/internal/team-nubus#1518](https://git.knut.univention.de/univention/dev/internal/team-nubus/issues/1518)
+
 ## [0.14.0](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.13.31...v0.14.0) (2026-01-02)
 
 
