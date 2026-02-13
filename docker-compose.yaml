@@ -94,7 +94,7 @@ services:
       start_period: "5s"
 
   test-helm:
-    image: "gitregistry.knut.univention.de/univention/dev/nubus-for-k8s/common-helm/testrunner:0.29.0"
+    image: "gitregistry.knut.univention.de/univention/dev/nubus-for-k8s/common-helm/testrunner:0.29.9@sha256:1de1a4b4eb089d93b43987f5db30ca37887ff79863510276a8230a3f2c41faa1"
     pull_policy: "if_not_present"
     command: "pytest tests/"
     profiles:
