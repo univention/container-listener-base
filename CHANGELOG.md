@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.6](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.14.5...v0.14.6) (2026-02-23)
+
+
+### Bug Fixes
+
+* **deps:** Update gitregistry.knut.univention.de/univention/dev/nubus-for-k8s/common-helm/testrunner Docker tag to v0.29.10 ([f5ab479](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/commit/f5ab479ed9d65c5b585a8ce2e95b3b659f14ca02)), closes [#0](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/issues/0)
+
 ## [0.14.5](https://git.knut.univention.de/univention/dev/nubus-for-k8s/listener-base/compare/v0.14.4...v0.14.5) (2026-02-11)
 
 
